@@ -1,14 +1,40 @@
+# users/admin.py
+
 from django.contrib import admin
-from user_auth.models import Profile, User
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from user_auth.models import User
 
 
 @admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    list_display = ("email", "is_staff", "is_active", "is_superuser", "session_id")
-    list_filter = ("is_staff", "is_active", "is_superuser")
+class UserAdmin(BaseUserAdmin):
+    list_display = (
+        "email",
+        "first_name",
+        "last_name",
+        "is_superuser",
+        "is_staff",
+    )
+    search_fields = ("email", "first_name", "last_name")
+    ordering = ("email",)
 
-
-@admin.register(Profile)
-class ProfileAdmin(admin.ModelAdmin):
-    list_display = ("user", "first_name", "last_name")
-    search_fields = ("user__email", "phone_number", "address", "city", "country", "zip_code")
+    fieldsets = (
+        (None, {"fields": ("email", "password")}),
+        ("Personal info", {"fields": ("first_name", "last_name")}),
+        ("Permissions", {"fields": ("is_active", "is_staff", "is_superuser")}),
+        ("Important dates", {"fields": ("last_login", "date_joined")}),
+    )
+    add_fieldsets = (
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": (
+                    "email",
+                    "first_name",
+                    "last_name",
+                    "password1",
+                    "password2",
+                ),
+            },
+        ),
+    )
