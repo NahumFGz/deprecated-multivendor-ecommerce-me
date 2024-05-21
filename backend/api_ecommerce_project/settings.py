@@ -145,9 +145,26 @@ CORS_ALLOWED_ORIGINS = [
 
 # Simple JWT
 # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework_simplejwt.authentication.JWTAuthentication",)
-}
+if not DEBUG:
+    REST_FRAMEWORK = {
+        "DEFAULT_AUTHENTICATION_CLASSES": (
+            "rest_framework_simplejwt.authentication.JWTAuthentication",
+        )
+    }
+
+    SWAGGER_SETTINGS = {
+        "SECURITY_DEFINITIONS": {
+            "Bearer": {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header",
+                "description": "Ingrese 'Bearer <token>' como valor",
+            }
+        },
+        "USE_SESSION_AUTH": False,
+        "JSON_EDITOR": True,
+        "api_key": "",
+    }
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": datetime.timedelta(hours=1),
