@@ -8,6 +8,7 @@ from .serializers import ProfileSerializer
 class ProfileViewSet(ModelViewSet):
     serializer_class = ProfileSerializer
     permission_classes = [IsAuthenticated]
+    http_method_names = ["get", "patch"]
 
     def get_queryset(self):
         if getattr(self, "swagger_fake_view", False):
