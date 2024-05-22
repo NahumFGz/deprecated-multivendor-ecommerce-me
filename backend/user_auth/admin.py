@@ -9,17 +9,14 @@ from user_auth.models import User
 class UserAdmin(BaseUserAdmin):
     list_display = (
         "email",
-        "first_name",
-        "last_name",
         "is_superuser",
         "is_staff",
     )
-    search_fields = ("email", "first_name", "last_name")
+    search_fields = ("email",)
     ordering = ("email",)
 
     fieldsets = (
         (None, {"fields": ("email", "password")}),
-        ("Personal info", {"fields": ("first_name", "last_name")}),
         ("Permissions", {"fields": ("is_active", "is_staff", "is_superuser")}),
         ("Important dates", {"fields": ("last_login", "date_joined")}),
     )
@@ -30,8 +27,6 @@ class UserAdmin(BaseUserAdmin):
                 "classes": ("wide",),
                 "fields": (
                     "email",
-                    "first_name",
-                    "last_name",
                     "password1",
                     "password2",
                 ),
