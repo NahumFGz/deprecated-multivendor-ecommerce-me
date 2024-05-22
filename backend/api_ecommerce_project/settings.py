@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "corsheaders",
     # Local-apps
     "user_auth",
+    "user_profile",
 ]
 
 MIDDLEWARE = [
