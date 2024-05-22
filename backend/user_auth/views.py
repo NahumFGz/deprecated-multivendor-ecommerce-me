@@ -1,4 +1,5 @@
 from rest_framework import generics, status
+from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -15,13 +16,40 @@ from user_auth.serializers import (
 
 
 class UserApiViewSet(ModelViewSet):
+    serializer_class = UserSerializer
     queryset = User.objects.all()
     permission_classes = [IsAuthenticated]
 
-    def get_serializer_class(self):
-        if self.action == "create":
-            return UserRegistrationSerializer
-        return UserSerializer
+
+class UserRegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserRegistrationSerializer
+    permission_classes = []  # Sin permisos de autenticación necesarios
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        try:
+            serializer.is_valid(raise_exception=True)
+        except ValidationError as e:
+            if "password" in e.detail:
+                return Response(
+                    {
+                        "detail": "Error en los campos de la contraseña: "
+                        + " ".join(e.detail["password"])
+                    },
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            if "email" in e.detail:
+                return Response(
+                    {"detail": "El email ya está registrado."}, status=status.HTTP_400_BAD_REQUEST
+                )
+            return Response(
+                {"detail": "Error de validación: " + str(e.detail)},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        self.perform_create(serializer)
+        return Response({"detail": "Usuario creado correctamente."}, status=status.HTTP_201_CREATED)
 
 
 class UserApiView(APIView):
