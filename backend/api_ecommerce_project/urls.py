@@ -42,6 +42,7 @@ urlpatterns = [
     # URLs de las aplicaciones
     path("admin/", admin.site.urls),
     path("api/", include("user_auth.urls")),
+    path("api/", include("user_profile.urls")),
 ]
 
 if settings.DEBUG:

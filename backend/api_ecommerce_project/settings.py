@@ -151,7 +151,7 @@ CORS_ALLOWED_ORIGINS = [
 
 # Simple JWT
 # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html
-if not DEBUG:
+if DEBUG:
     REST_FRAMEWORK = {
         "DEFAULT_AUTHENTICATION_CLASSES": (
             "rest_framework_simplejwt.authentication.JWTAuthentication",
