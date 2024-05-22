@@ -31,3 +31,19 @@ export async function authMeApi (accessToken) {
     throw new Error('Auth failed')
   }
 }
+
+export async function logoutAllApi (accessToken) {
+  try {
+    const axiosInstance = createAxiosAuthInstance(accessToken)
+    const response = await axiosInstance.post('/api/auth/logout_all/')
+    const { data, status } = response
+
+    if (status === 200) {
+      return data
+    } else {
+      throw new Error('Logout all failed')
+    }
+  } catch (error) {
+    throw new Error('Logout all failed')
+  }
+}

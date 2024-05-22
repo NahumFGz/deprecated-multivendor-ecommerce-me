@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { authMeApi, loginApi } from '../services/api/authService'
+import { authMeApi, loginApi, logoutAllApi } from '../services/api/authService'
 
 export function Tests () {
   const [token, setToken] = useState('')
@@ -29,6 +29,21 @@ export function Tests () {
 
     if (token) {
       testAuthMe()
+    }
+  }, [token])
+
+  useEffect(() => {
+    const testLogoutAll = async () => {
+      try {
+        const response = await logoutAllApi(token)
+        console.log('Logout All:', response)
+      } catch (error) {
+        console.error('Error during logout all:', error.message)
+      }
+    }
+
+    if (token) {
+      testLogoutAll()
     }
   }, [token])
 
