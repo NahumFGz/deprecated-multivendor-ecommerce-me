@@ -1,3 +1,5 @@
+import re
+
 from decouple import config
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.tokens import default_token_generator
@@ -9,6 +11,47 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from user_auth.models import User
+
+
+class UserRegistrationSerializer(serializers.ModelSerializer):
+    password2 = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ("id", "email", "first_name", "last_name", "password", "password2")
+        extra_kwargs = {"password": {"write_only": True}}
+
+    def validate(self, attrs):
+        password = attrs.get("password")
+        password2 = attrs.get("password2")
+
+        if password != password2:
+            raise serializers.ValidationError({"password": "Password fields didn't match."})
+
+        # Custom password validations
+        if len(password) < 8:
+            raise serializers.ValidationError(
+                {"password": "Password must be at least 8 characters long."}
+            )
+        if not re.search(r"[a-zA-Z]", password):
+            raise serializers.ValidationError(
+                {"password": "Password must contain at least one letter."}
+            )
+        if not re.search(r"[0-9]", password):
+            raise serializers.ValidationError(
+                {"password": "Password must contain at least one digit."}
+            )
+        if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
+            raise serializers.ValidationError(
+                {"password": "Password must contain at least one special character."}
+            )
+
+        return attrs
+
+    def create(self, validated_data):
+        validated_data.pop("password2")
+        validated_data["password"] = make_password(validated_data["password"])
+        return User.objects.create(**validated_data)
 
 
 class UserSerializer(serializers.ModelSerializer):

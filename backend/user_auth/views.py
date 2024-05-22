@@ -9,14 +9,19 @@ from user_auth.serializers import (
     CustomTokenObtainPairSerializer,
     PasswordResetConfirmSerializer,
     PasswordResetSerializer,
+    UserRegistrationSerializer,
     UserSerializer,
 )
 
 
 class UserApiViewSet(ModelViewSet):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_serializer_class(self):
+        if self.action == "create":
+            return UserRegistrationSerializer
+        return UserSerializer
 
 
 class UserApiView(APIView):
