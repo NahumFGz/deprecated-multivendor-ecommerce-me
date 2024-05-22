@@ -35,7 +35,7 @@ export async function authMeApi (accessToken) {
 export async function logoutAllApi (accessToken) {
   try {
     const axiosInstance = createAxiosAuthInstance(accessToken)
-    const response = await axiosInstance.post('/api/auth/logout_all/')
+    const response = await axiosInstance.post('/api/auth/logout-all/')
     const { data, status } = response
 
     if (status === 200) {
@@ -45,5 +45,37 @@ export async function logoutAllApi (accessToken) {
     }
   } catch (error) {
     throw new Error('Logout all failed')
+  }
+}
+
+export async function resetPasswordApi (email) {
+  try {
+    const axiosInstance = createAxiosInstance()
+    const response = await axiosInstance.post('/api/auth/password-reset/', { email })
+    const { data, status } = response
+
+    if (status === 200) {
+      return data
+    } else {
+      throw new Error('Reset password failed')
+    }
+  } catch (error) {
+    throw new Error('Reset password failed')
+  }
+}
+
+export async function refreshTokenApi (refreshToken) {
+  try {
+    const axiosInstance = createAxiosInstance()
+    const response = await axiosInstance.post('/api/auth/refresh/', { refresh: refreshToken })
+    const { data, status } = response
+
+    if (status === 200) {
+      return data
+    } else {
+      throw new Error('Refresh token failed')
+    }
+  } catch (error) {
+    throw new Error('Refresh token failed')
   }
 }

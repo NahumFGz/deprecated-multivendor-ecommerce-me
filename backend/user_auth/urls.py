@@ -18,7 +18,7 @@ urlpatterns = [
     ),
     path("auth/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path(
-        "auth/logout_all/",
+        "auth/logout-all/",
         views.LogoutAllDevicesView.as_view(),
         name="logout_all_devices",
     ),
