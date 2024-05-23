@@ -13,12 +13,12 @@ urlpatterns = [
     path("", include(router.urls)),
     path("auth/me/", views.UserApiView.as_view(), name="user_info"),
     path(
-        "auth/login/",
+        "auth/login-access/",
         views.CustomTokenObtainPairView.as_view(),
         name="token_obtain_pair",
     ),
+    path("auth/login-refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("auth/register/", views.UserRegisterView.as_view(), name="user_register"),
-    path("auth/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path(
         "auth/logout-all/",
         views.LogoutAllDevicesView.as_view(),
