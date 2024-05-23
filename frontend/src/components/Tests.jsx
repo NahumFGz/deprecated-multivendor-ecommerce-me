@@ -1,12 +1,20 @@
 import { useEffect } from 'react'
+import Login from './Login'
+import LogoutButton from './LogoutButton'
+import { getItem } from '../services/storage/sessionStorage'
 
 export function Tests () {
   useEffect(() => {
+    const userData = getItem('user')
+
+    console.log(userData)
   }, [])
 
   return (
     <>
-      <h1 className='text-red-300'>Hola Tests</h1>
+      <Login />
+      <p>---</p>
+      <LogoutButton />
     </>
   )
 }
