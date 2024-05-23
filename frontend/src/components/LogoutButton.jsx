@@ -1,7 +1,7 @@
 import React from 'react'
-import useAuthStore from '../store/authStore'
+import { useAuthStore } from '../store/authStore'
 
-const LogoutButton = () => {
+export const LogoutButton = () => {
   const { logout, isLoading } = useAuthStore()
 
   return (
@@ -10,5 +10,3 @@ const LogoutButton = () => {
     </button>
   )
 }
-
-export default LogoutButton

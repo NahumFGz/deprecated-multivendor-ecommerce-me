@@ -1,16 +1,18 @@
-import React, { useState } from 'react'
-import useAuthStore from '../store/authStore'
+import { useState } from 'react'
+import { useAuthStore } from '../store/authStore'
 
-const Login = () => {
+export const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { login, isLoading, error, clearError } = useAuthStore()
+  const { token, login, isLoading, error, clearError } = useAuthStore()
 
   const handleLogin = async (e) => {
     e.preventDefault()
     clearError()
     await login(email, password)
   }
+
+  console.log('token:', token)
 
   return (
     <div>
@@ -39,5 +41,3 @@ const Login = () => {
     </div>
   )
 }
-
-export default Login
