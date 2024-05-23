@@ -39,9 +39,9 @@ export async function registerApi (registerFormData) {
     return response.data
   } catch (error) {
     if (error.response && error.response.data) {
-      return error.response.data // Aquí devolvemos la respuesta del servidor, incluso si es un error
+      return error.response.data
     }
-    throw new Error('No se pudo conectar con la API') // Aquí lanzamos un error solo si no hay respuesta del servidor
+    throw new Error('No se pudo conectar con la API')
   }
 }
 
