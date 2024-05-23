@@ -1,9 +1,9 @@
 import { createAxiosInstance, createAxiosAuthInstance } from './axiosInstance'
 
-export async function loginApi (email, password) {
+export async function loginAccessApi (email, password) {
   try {
     const axiosInstance = createAxiosInstance()
-    const response = await axiosInstance.post('/api/auth/login/', { email, password })
+    const response = await axiosInstance.post('/api/auth/login-access/', { email, password })
     const { data, status } = response
 
     if (status === 200) {
@@ -13,6 +13,22 @@ export async function loginApi (email, password) {
     }
   } catch (error) {
     throw new Error('Login failed')
+  }
+}
+
+export async function loginRefreshApi (refreshToken) {
+  try {
+    const axiosInstance = createAxiosInstance()
+    const response = await axiosInstance.post('/api/auth/login-refresh/', { refresh: refreshToken })
+    const { data, status } = response
+
+    if (status === 200) {
+      return data
+    } else {
+      throw new Error('Refresh token failed')
+    }
+  } catch (error) {
+    throw new Error('Refresh token failed')
   }
 }
 
@@ -74,21 +90,5 @@ export async function resetPasswordApi (email) {
     }
   } catch (error) {
     throw new Error('Reset password failed')
-  }
-}
-
-export async function refreshTokenApi (refreshToken) {
-  try {
-    const axiosInstance = createAxiosInstance()
-    const response = await axiosInstance.post('/api/auth/refresh/', { refresh: refreshToken })
-    const { data, status } = response
-
-    if (status === 200) {
-      return data
-    } else {
-      throw new Error('Refresh token failed')
-    }
-  } catch (error) {
-    throw new Error('Refresh token failed')
   }
 }
