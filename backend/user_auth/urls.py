@@ -3,6 +3,7 @@
 from django.urls import include, path
 from rest_framework import routers
 from rest_framework_simplejwt.views import TokenRefreshView
+
 from user_auth import views
 
 router = routers.DefaultRouter()
@@ -24,6 +25,7 @@ urlpatterns = [
         name="logout_all_devices",
     ),
     path("auth/password-reset/", views.PasswordResetView.as_view(), name="password_reset"),
+    path("auth/password-change/", views.PasswordChangeView.as_view(), name="password_change"),
     path(
         "auth/password-reset-confirm/<uidb64>/<token>/",
         views.PasswordResetConfirmView.as_view(),
