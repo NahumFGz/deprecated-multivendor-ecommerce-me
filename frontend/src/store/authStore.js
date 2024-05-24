@@ -1,5 +1,3 @@
-// /Users/nahumfg/Projects/GitHubProjects/multivendor-ecommerce/frontend/src/store/authStore.js
-
 import { create } from 'zustand'
 import { setItem as setLocalItem, getItem as getLocalItem, removeItem as removeLocalItem } from '../services/storage/localStorage'
 import { loginAccessApi } from '../services/api/authService'
