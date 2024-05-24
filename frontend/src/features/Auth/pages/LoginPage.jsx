@@ -2,9 +2,10 @@ import { AuthLayout } from '../../../layouts/AuthLayout'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import { useAuthStore } from '../../../store/useAuthStore'
+import { toast } from 'react-toastify'
 
 export function LoginPage () {
-  const { login } = useAuthStore()
+  const { login, error } = useAuthStore()
 
   const formik = useFormik({
     initialValues: {
@@ -16,11 +17,12 @@ export function LoginPage () {
       password: Yup.string().required('Required')
     }),
     onSubmit: async (values) => {
-      try {
-        console.log(values)
-        await login(values.email, values.password)
-      } catch (error) {
-        console.log(error)
+      console.log(values)
+      await login(values.email, values.password)
+      if (!error) {
+        toast.success('Logged in')
+      } else {
+        toast.error('Usuario o contraseña incorrectos')
       }
     }
   })
