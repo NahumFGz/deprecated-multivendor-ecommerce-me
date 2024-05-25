@@ -1,9 +1,12 @@
 import { AuthLayout } from '../../../layouts/AuthLayout'
 import { useLoginForm } from '../hooks/useLoginForm'
+import { useEffect } from 'react'
 
 export function LoginPage () {
-  const { formik } = useLoginForm()
+  const { formik, token, navigate } = useLoginForm()
+  useEffect(() => { if (token) navigate('/home') })
 
+  if (token) return null
   return (
     <AuthLayout>
       <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8'>

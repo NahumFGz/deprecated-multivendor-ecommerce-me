@@ -2,12 +2,11 @@ import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import { useAuthStore } from '../../../store/useAuthStore'
 import { toast } from 'react-toastify'
-import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export const useLoginForm = () => {
-  const { login, error } = useAuthStore()
-  const [loadingLogin, setloadingLogin] = useState(false)
+  const login = useAuthStore((store) => store.login)
+  const token = useAuthStore((store) => store.token)
   const navigate = useNavigate()
 
   const validationSchema = Yup.object({
@@ -22,22 +21,14 @@ export const useLoginForm = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      setloadingLogin(true)
-      await login(values.email, values.password)
-      setloadingLogin(false)
+      try {
+        await login(values.email, values.password)
+        navigate('/home')
+      } catch (error) {
+        toast.error(error.message)
+      }
     }
   })
 
-  useEffect(() => {
-    if (!loadingLogin) {
-      if (error) {
-        toast.error(error)
-      } else {
-        navigate('/home')
-      }
-      setloadingLogin(false)
-    }
-  }, [loadingLogin])
-
-  return { formik, loadingLogin }
+  return { formik, token, navigate }
 }
