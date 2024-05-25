@@ -21,7 +21,7 @@ export const useAuthStore = create((set) => ({
     }
   },
 
-  logout: async () => {
+  logout: () => {
     set({ isLoading: true, error: null })
     try {
       removeLocalItem('token')
