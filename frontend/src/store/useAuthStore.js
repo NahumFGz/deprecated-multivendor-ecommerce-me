@@ -18,7 +18,7 @@ export const useAuthStore = create((set) => ({
       set({ token: data.access, refreshToken: data.refresh, isLoading: false })
     } catch (error) {
       set({ error: error.message, isLoading: false })
-      throw error
+      throw new Error(error.message)
     }
   },
 
@@ -31,7 +31,7 @@ export const useAuthStore = create((set) => ({
       set({ token: null, refreshToken: null, isLoading: false })
     } catch (error) {
       set({ error: error.message, isLoading: false })
-      throw error
+      throw new Error(error.message)
     }
   },
 
