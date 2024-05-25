@@ -1,11 +1,15 @@
+/* eslint-disable no-unused-vars */
 import { AuthLayout } from '../../../layouts/AuthLayout'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import { useAuthStore } from '../../../store/useAuthStore'
 import { toast } from 'react-toastify'
+import { useState } from 'react'
 
 export function LoginPage () {
-  const { login, error } = useAuthStore()
+  const { login } = useAuthStore()
+  const [loading, setLoading] = useState(false)
+  const [loginError, setLoginError] = useState(null)
 
   const formik = useFormik({
     initialValues: {
@@ -17,12 +21,16 @@ export function LoginPage () {
       password: Yup.string().required('Required')
     }),
     onSubmit: async (values) => {
-      console.log(values)
-      await login(values.email, values.password)
-      if (!error) {
+      setLoading(true)
+      setLoginError(null)
+      try {
+        await login(values.email, values.password)
         toast.success('Logged in')
-      } else {
-        toast.error('Usuario o contraseña incorrectos')
+        setLoading(false)
+      } catch (error) {
+        setLoginError(error.message)
+        toast.error(error.message)
+        setLoading(false)
       }
     }
   })
