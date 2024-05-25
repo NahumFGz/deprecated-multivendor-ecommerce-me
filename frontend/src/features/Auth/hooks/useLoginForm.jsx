@@ -5,8 +5,8 @@ import { toast } from 'react-toastify'
 import { useEffect, useState } from 'react'
 
 export const useLoginForm = () => {
-  const { login, error, isLoading } = useAuthStore()
-  const [loginAttempted, setLoginAttempted] = useState(false)
+  const { login, error } = useAuthStore()
+  const [loadingLogin, setloadingLogin] = useState(false)
 
   const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email address').required('Required'),
@@ -20,24 +20,22 @@ export const useLoginForm = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      setLoginAttempted(true)
+      setloadingLogin(true)
       await login(values.email, values.password)
+      setloadingLogin(false)
     }
   })
 
   useEffect(() => {
-    // Solo reacciona cuando el estado de loading cambia a false y un login ha sido intentado
-    if (!isLoading && loginAttempted) {
+    if (!loadingLogin) {
       if (error) {
         toast.error(error)
       } else {
         toast.success('Login successful')
       }
-      // Restablece el estado para nuevos intentos
-      setLoginAttempted(false)
+      setloadingLogin(false)
     }
-    console.log('Error: --> ', error)
-  }, [isLoading, loginAttempted, error]) // Observa 'isLoading' principalmente
+  }, [loadingLogin])
 
   return { formik }
 }
