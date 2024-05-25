@@ -5,12 +5,21 @@ export const useAuthStore = create(
   persist(
     (set) => ({
       token: null,
-      setToken: (token) => set({ token })
+      isAuth: false,
+      profile: null,
+      setToken: (token) => {
+        set({ token, isAuth: true })
+        console.log('token', token)
+        console.log('isAuth', true)
+      },
+      setProfile: (profile) => set({ profile }),
+      cleanStore: () => {
+        set({ token: null, isAuth: false, profile: null })
+        console.log('cleanStore')
+      }
     }),
     {
-      name: 'auth',
-      // eslint-disable-next-line no-undef
-      getStorage: () => localStorage
+      name: 'user-storage'
     }
   )
 )

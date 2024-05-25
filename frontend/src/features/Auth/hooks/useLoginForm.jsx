@@ -3,10 +3,12 @@ import { useFormik } from 'formik'
 import { useAuthStore } from '../../../store/useAuthStore'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import { useAuthService } from './useAuthService'
 
 export const useLoginForm = () => {
-  const login = useAuthStore((store) => store.login)
-  const token = useAuthStore((store) => store.token)
+  const { loginAccess } = useAuthService()
+  const setToken = useAuthStore((store) => store.setToken)
+  const isAuth = useAuthStore((store) => store.isAuth)
   const navigate = useNavigate()
 
   const validationSchema = Yup.object({
@@ -22,7 +24,8 @@ export const useLoginForm = () => {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        await login(values.email, values.password)
+        const response = await loginAccess(values.email, values.password)
+        setToken(response)
         navigate('/home')
       } catch (error) {
         toast.error(error.message)
@@ -30,5 +33,5 @@ export const useLoginForm = () => {
     }
   })
 
-  return { formik, token, navigate }
+  return { formik, navigate, isAuth }
 }
