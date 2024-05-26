@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import { authUrls } from '../routes/authUrls'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
 
 export function RegisterPage () {
   const genderOptions = [
@@ -8,6 +10,30 @@ export function RegisterPage () {
     { value: 'F', label: 'Femenino' },
     { value: 'O', label: 'Otro' }
   ]
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      first_name: '',
+      last_name: '',
+      gender: '',
+      birth_date: '',
+      password: '',
+      password2: ''
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email('Correo inválido').required('Requerido'),
+      first_name: Yup.string().required('Requerido'),
+      last_name: Yup.string().required('Requerido'),
+      gender: Yup.string().required('Requerido'),
+      birth_date: Yup.date().required('Requerido'),
+      password: Yup.string().required('Requerido'),
+      password2: Yup.string().oneOf([Yup.ref('password'), null], 'Las contraseñas no coinciden')
+    }),
+    onSubmit: async (values) => {
+      console.log(values)
+    }
+  })
 
   return (
     <>
@@ -27,6 +53,7 @@ export function RegisterPage () {
           <form
             className='space-y-6'
             noValidate
+            onSubmit={formik.handleSubmit}
           >
             <div>
               <label htmlFor='email' className='block text-sm font-medium leading-6 text-gray-900'>
@@ -39,6 +66,9 @@ export function RegisterPage () {
                   type='email'
                   autoComplete='email'
                   className='block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
               </div>
             </div>
@@ -53,6 +83,9 @@ export function RegisterPage () {
                   name='first_name'
                   type='text'
                   className='block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  value={formik.values.first_name}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
               </div>
             </div>
@@ -67,6 +100,9 @@ export function RegisterPage () {
                   name='last_name'
                   type='text'
                   className='block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  value={formik.values.last_name}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
               </div>
             </div>
@@ -80,6 +116,9 @@ export function RegisterPage () {
                   id='gender'
                   name='gender'
                   className='block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  value={formik.values.gender}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 >
                   {genderOptions.map(option => (
                     <option key={option.value} value={option.value}>
@@ -100,6 +139,9 @@ export function RegisterPage () {
                   name='birth_date'
                   type='date'
                   className='block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  value={formik.values.birth_date}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
               </div>
             </div>
@@ -114,6 +156,9 @@ export function RegisterPage () {
                   name='password'
                   type='password'
                   className='block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
               </div>
             </div>
@@ -129,6 +174,9 @@ export function RegisterPage () {
                   type='password'
                   required
                   className='block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  value={formik.values.password2}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
               </div>
             </div>
