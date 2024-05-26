@@ -25,7 +25,7 @@ export function HomeLayout ({ children }) {
         {
           isAuth
             ? <button onClick={handleGetProfile}> Get Profile</button>
-            : <Link to='/login'> <h1 className='text-green-400'>Login</h1> </Link>
+            : <Link to='/auth/login'> <h1 className='text-green-400'>Login</h1> </Link>
         }
         <h1 onClick={handleLogout} className='text-red-400 cursor-pointer'>Logout</h1>
       </div>
