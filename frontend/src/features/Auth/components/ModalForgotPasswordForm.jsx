@@ -3,12 +3,12 @@ import { useFormik } from 'formik'
 import { toast } from 'react-toastify'
 import { useAuthAPI } from '../hooks/useAuthAPI'
 
-export function ModalForgotPasswordForm ({ onClose }) {
+export function ModalForgotPasswordForm ({ onClose, getEmail }) {
   const { resetPassword } = useAuthAPI()
 
   const formik = useFormik({
     initialValues: {
-      email: ''
+      email: '' || getEmail
     },
     validationSchema: Yup.object({
       email: Yup.string().email('Correo inválido').required('Requerido')

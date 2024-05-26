@@ -106,7 +106,7 @@ export function LoginPage () {
       </div>
 
       <ModalBase isOpen={isModalOpen} onClose={closeModal}>
-        <ModalForgotPasswordForm onClose={closeModal} />
+        <ModalForgotPasswordForm onClose={closeModal} getEmail={formik.values.email} />
       </ModalBase>
     </div>
   )
