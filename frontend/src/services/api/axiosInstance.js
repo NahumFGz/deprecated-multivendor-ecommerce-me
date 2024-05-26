@@ -14,9 +14,9 @@ function createAxiosInstance () {
 }
 
 function createAxiosAuthInstance () {
-  const token = useAuthStore.getState().token
-  const setToken = useAuthStore.getState().setToken
-  const cleanStore = useAuthStore.getState().cleanStore
+  const getToken = () => useAuthStore.getState().token
+  const setToken = (token) => useAuthStore.getState().setToken(token)
+  const cleanStore = () => useAuthStore.getState().cleanStore()
 
   const axiosInstance = axios.create({
     baseURL: BASE_URL,
@@ -27,6 +27,7 @@ function createAxiosAuthInstance () {
 
   axiosInstance.interceptors.request.use(
     (config) => {
+      const token = getToken()
       const accessToken = token?.access
       if (accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`
@@ -40,13 +41,13 @@ function createAxiosAuthInstance () {
 
   axiosInstance.interceptors.response.use(
     (response) => {
-      console.log('Response interceptor', response)
       return response
     },
     async (error) => {
       const originalRequest = error.config
       if (error.response && error.response.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true
+        const token = getToken()
         const refreshToken = token?.refresh
         if (refreshToken) {
           try {
@@ -59,7 +60,7 @@ function createAxiosAuthInstance () {
             console.log('Error refreshing token', err)
             cleanStore()
             // Opcional: redirigir al usuario a la página de inicio de sesión
-            // window.location.href = '/login'
+            // window.location.href = '/login';
           }
         }
       }
