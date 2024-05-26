@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
-export function PasswordResetConfirmPage () {
+export function PasswordResetPage () {
   const { uid, token } = useParams()
 
   useEffect(() => {
@@ -11,7 +11,7 @@ export function PasswordResetConfirmPage () {
 
   return (
     <div>
-      <h1>Password Reset Confirm Page</h1>
+      <h1>Password Reset Page</h1>
     </div>
   )
 }

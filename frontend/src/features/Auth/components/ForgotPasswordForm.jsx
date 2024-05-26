@@ -1,4 +1,4 @@
-export function ForgotPasswordPage () {
+export function ForgotPasswordForm () {
   return (
 
     <div className='p-2'>
