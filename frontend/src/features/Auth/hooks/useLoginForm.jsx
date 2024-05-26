@@ -3,10 +3,10 @@ import { useFormik } from 'formik'
 import { useAuthStore } from '../../../store/useAuthStore'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
-import { useAuthService } from './useAuthService'
+import { useAuthAPI } from './useAuthAPI'
 
 export const useLoginForm = () => {
-  const { loginAccess } = useAuthService()
+  const { loginAccess } = useAuthAPI()
   const setToken = useAuthStore((store) => store.setToken)
   const isAuth = useAuthStore((store) => store.isAuth)
   const navigate = useNavigate()

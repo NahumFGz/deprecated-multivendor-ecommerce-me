@@ -1,7 +1,7 @@
-import { loginAccessApi, authMeApi } from '../../../services/api/authService'
+import { loginAccessApi, authMeApi } from '../../../services/api/authAPI'
 import { useAuthStore } from '../../../store/useAuthStore'
 
-export function useAuthService () {
+export function useAuthAPI () {
   const token = useAuthStore((state) => state.token)
 
   const loginAccess = async (email, password) => {

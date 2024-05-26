@@ -4,12 +4,13 @@ import { useLoginForm } from '../hooks/useLoginForm'
 
 export function LoginPage () {
   const { formik, isAuth, navigate } = useLoginForm()
+
   useEffect(() => {
-    console.log('isAuth', isAuth)
     if (isAuth) navigate('/home')
   }, [isAuth])
 
   if (isAuth) return null
+
   return (
     <AuthLayout>
       <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8'>

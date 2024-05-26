@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
 import { useAuthStore } from '../store/useAuthStore'
-import { useAuthService } from '../features/Auth/hooks/useAuthService'
+import { useAuthAPI } from '../features/Auth/hooks/useAuthAPI'
 
 export function HomeLayout ({ children }) {
   const cleanStore = useAuthStore((store) => store.cleanStore)
   const isAuth = useAuthStore((store) => store.isAuth)
-  const { authMe } = useAuthService()
+  const { authMe } = useAuthAPI()
 
   const handleLogout = () => {
     console.log('Logging out...')
