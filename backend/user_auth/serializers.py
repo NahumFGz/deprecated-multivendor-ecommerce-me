@@ -10,7 +10,6 @@ from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
 from user_auth.models import User
 
 
@@ -168,7 +167,7 @@ class PasswordResetSerializer(serializers.Serializer):
         # Configurar tu dominio correctamente
         domain = config("HOST_DOMAIN")
         http_protocol = config("HTTP_HTTPS_PROTOCOL")
-        link = f"{http_protocol}://{domain}/api/auth/password-reset-confirm/{uid}/{token}/"
+        link = f"{http_protocol}://{domain}/auth/password-reset-confirm/{uid}/{token}/"
 
         # Renderizar la plantilla HTML
         context = {
