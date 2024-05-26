@@ -106,7 +106,7 @@ export function LoginPage () {
       </div>
 
       <BasicModal isOpen={isModalOpen} onClose={closeModal}>
-        <ForgotPasswordForm />
+        <ForgotPasswordForm onClose={closeModal} />
       </BasicModal>
     </div>
   )

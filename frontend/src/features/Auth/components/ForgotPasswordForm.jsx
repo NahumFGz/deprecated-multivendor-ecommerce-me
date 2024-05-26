@@ -1,7 +1,11 @@
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
+import { toast } from 'react-toastify'
+import { useAuthAPI } from '../hooks/useAuthAPI'
 
-export function ForgotPasswordForm () {
+export function ForgotPasswordForm ({ onClose }) {
+  const { resetPassword } = useAuthAPI()
+
   const formik = useFormik({
     initialValues: {
       email: ''
@@ -10,7 +14,13 @@ export function ForgotPasswordForm () {
       email: Yup.string().email('Correo inválido').required('Requerido')
     }),
     onSubmit: async (values) => {
-      console.log(values)
+      try {
+        const response = await resetPassword(values.email)
+        toast.success(response.detail)
+        onClose()
+      } catch (error) {
+        toast.error('Usuario no encontrado')
+      }
     }
   })
 
