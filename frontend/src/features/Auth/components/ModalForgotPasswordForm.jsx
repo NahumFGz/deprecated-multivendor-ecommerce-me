@@ -3,7 +3,7 @@ import { useFormik } from 'formik'
 import { toast } from 'react-toastify'
 import { useAuthAPI } from '../hooks/useAuthAPI'
 
-export function ForgotPasswordForm ({ onClose }) {
+export function ModalForgotPasswordForm ({ onClose }) {
   const { resetPassword } = useAuthAPI()
 
   const formik = useFormik({
@@ -15,8 +15,8 @@ export function ForgotPasswordForm ({ onClose }) {
     }),
     onSubmit: async (values) => {
       try {
-        const response = await resetPassword(values.email)
-        toast.success(response.detail)
+        await resetPassword(values.email)
+        toast.success('Correo de recuperacion enviado')
         onClose()
       } catch (error) {
         toast.error('Usuario no encontrado')

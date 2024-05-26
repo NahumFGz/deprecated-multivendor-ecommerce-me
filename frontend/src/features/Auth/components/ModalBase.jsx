@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-export function BasicModal ({ isOpen, onClose, children }) {
+export function ModalBase ({ isOpen, onClose, children }) {
   const handleKeyDown = (event) => {
     if (event.key === 'Escape') {
       onClose()

@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { useLoginForm } from '../hooks/useLoginForm'
 import { Link } from 'react-router-dom'
 import { authUrls } from '../routes/authUrls'
-import { BasicModal } from '../components/BasicModal'
-import { ForgotPasswordForm } from '../components/ForgotPasswordForm'
+import { ModalBase } from '../components/ModalBase'
+import { ModalForgotPasswordForm } from '../components/ModalForgotPasswordForm'
 
 export function LoginPage () {
   const { formik, isAuth, navigate } = useLoginForm()
@@ -105,9 +105,9 @@ export function LoginPage () {
         </p>
       </div>
 
-      <BasicModal isOpen={isModalOpen} onClose={closeModal}>
-        <ForgotPasswordForm onClose={closeModal} />
-      </BasicModal>
+      <ModalBase isOpen={isModalOpen} onClose={closeModal}>
+        <ModalForgotPasswordForm onClose={closeModal} />
+      </ModalBase>
     </div>
   )
 }
