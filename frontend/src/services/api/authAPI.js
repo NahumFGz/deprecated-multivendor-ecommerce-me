@@ -92,3 +92,19 @@ export async function resetPasswordApi (email) {
     throw new Error('Reset password failed')
   }
 }
+
+export async function resetPasswordConfirmApi (newPassword, uid, token) {
+  try {
+    const axiosInstance = createAxiosInstance()
+    const response = await axiosInstance.post(`/api/auth/password-reset-confirm/${uid}/${token}`, { newPassword, uid, token })
+    const { data, status } = response
+
+    if (status === 200) {
+      return data
+    } else {
+      throw new Error('Reset password confirm failed')
+    }
+  } catch (error) {
+    throw new Error('Reset password confirm failed')
+  }
+}
