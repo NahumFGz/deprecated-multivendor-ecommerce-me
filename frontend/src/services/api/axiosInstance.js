@@ -14,9 +14,9 @@ function createAxiosInstance () {
 }
 
 function createAxiosAuthInstance () {
-  const token = useAuthStore((store) => store.token)
-  const setToken = useAuthStore((store) => store.setToken)
-  const cleanStore = useAuthStore((store) => store.cleanStore)
+  const token = useAuthStore.getState().token
+  const setToken = useAuthStore.getState().setToken
+  const cleanStore = useAuthStore.getState().cleanStore
 
   const axiosInstance = axios.create({
     baseURL: BASE_URL,
