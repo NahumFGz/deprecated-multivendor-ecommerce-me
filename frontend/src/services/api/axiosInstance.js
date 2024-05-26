@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { getItem as getLocalItem, setItem as setLocalItem, removeItem as removeLocalItem } from '../storage/localStorage'
 import { loginRefreshApi } from './authService'
+import { useAuthStore } from '../../store/useAuthStore'
 
 const BASE_URL = import.meta.env.VITE_BASE_API_URL
 
@@ -14,6 +14,10 @@ function createAxiosInstance () {
 }
 
 function createAxiosAuthInstance () {
+  const token = useAuthStore((store) => store.token)
+  const setToken = useAuthStore((store) => store.setToken)
+  const cleanStore = useAuthStore((store) => store.cleanStore)
+
   const axiosInstance = axios.create({
     baseURL: BASE_URL,
     headers: {
@@ -23,9 +27,9 @@ function createAxiosAuthInstance () {
 
   axiosInstance.interceptors.request.use(
     (config) => {
-      const token = getLocalItem('token')
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`
+      const accessToken = token?.access
+      if (accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`
       }
       return config
     },
@@ -42,17 +46,17 @@ function createAxiosAuthInstance () {
       const originalRequest = error.config
       if (error.response && error.response.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true
-        const refreshToken = getLocalItem('refreshToken')
+        const refreshToken = token?.refresh
         if (refreshToken) {
           try {
             console.log('Refreshing token')
-            const data = await loginRefreshApi(refreshToken)
-            setLocalItem('token', data.access)
-            originalRequest.headers.Authorization = `Bearer ${data.access}`
+            const rotateToken = await loginRefreshApi(refreshToken)
+            setToken(rotateToken)
+            originalRequest.headers.Authorization = `Bearer ${rotateToken.access}`
             return axiosInstance(originalRequest)
           } catch (err) {
-            removeLocalItem('token')
-            removeLocalItem('refreshToken')
+            console.log('Error refreshing token', err)
+            cleanStore()
             // Opcional: redirigir al usuario a la página de inicio de sesión
             // window.location.href = '/login'
           }

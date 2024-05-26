@@ -7,7 +7,7 @@ export function LoginPage () {
   useEffect(() => {
     console.log('isAuth', isAuth)
     if (isAuth) navigate('/home')
-  })
+  }, [isAuth])
 
   if (isAuth) return null
   return (
