@@ -40,6 +40,7 @@ function createAxiosAuthInstance () {
 
   axiosInstance.interceptors.response.use(
     (response) => {
+      console.log('Response interceptor', response)
       return response
     },
     async (error) => {

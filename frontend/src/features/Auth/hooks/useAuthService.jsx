@@ -14,9 +14,12 @@ export function useAuthService () {
   }
 
   const authMe = async () => {
-    console.log('access:-->', token.access)
-    const response = await authMeApi(token.access)
-    return response
+    try {
+      const response = await authMeApi(token?.access)
+      return response
+    } catch (error) {
+      throw new Error('Error getting profile')
+    }
   }
 
   return { loginAccess, authMe }

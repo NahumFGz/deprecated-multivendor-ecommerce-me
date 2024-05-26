@@ -54,10 +54,10 @@ export async function authMeApi (accessToken) {
     if (status === 200) {
       return data
     } else {
-      throw new Error('Auth failed')
+      throw new Error('AuthMe failed')
     }
   } catch (error) {
-    throw new Error('Auth failed')
+    throw new Error('AuthMe failed')
   }
 }
 
