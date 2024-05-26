@@ -1,16 +1,20 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { authUrls } from '../routes/authUrls'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useAuthAPI } from '../hooks/useAuthAPI'
+import { toast } from 'react-toastify'
+
+const genderOptions = [
+  { value: '', label: 'Seleccione su género' },
+  { value: 'M', label: 'Masculino' },
+  { value: 'F', label: 'Femenino' },
+  { value: 'O', label: 'Otro' }
+]
 
 export function RegisterPage () {
-  const genderOptions = [
-    { value: '', label: 'Seleccione su genero' },
-    { value: 'M', label: 'Masculino' },
-    { value: 'F', label: 'Femenino' },
-    { value: 'O', label: 'Otro' }
-  ]
-
+  const { registerUser } = useAuthAPI()
+  const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -26,14 +30,43 @@ export function RegisterPage () {
       first_name: Yup.string().required('Requerido'),
       last_name: Yup.string().required('Requerido'),
       gender: Yup.string().required('Requerido'),
-      birth_date: Yup.date().required('Requerido'),
-      password: Yup.string().required('Requerido'),
-      password2: Yup.string().oneOf([Yup.ref('password'), null], 'Las contraseñas no coinciden')
+      birth_date: Yup.date()
+        .required('Requerido')
+        .max(new Date(), 'Fecha no valida')
+        .min(1900, 'Debes tener al menos 10 años de edad'),
+      password: Yup.string()
+        .required('Requerido')
+        .matches(/[A-Z]/, 'Debe contener al menos una letra mayúscula')
+        .matches(/[a-z]/, 'Debe contener al menos una letra minúscula')
+        .matches(/\d/, 'Debe contener al menos un número')
+        .matches(/[@$!%*?&.]/, 'Debe contener al menos un carácter especial'),
+      password2: Yup.string()
+        .oneOf([Yup.ref('password'), null], 'Las contraseñas no coinciden')
+        .required('Requerido')
     }),
     onSubmit: async (values) => {
-      console.log(values)
+      try {
+        const { detail } = await registerUser(values)
+        if (detail.includes('ya está registrado')) {
+          toast.info(detail)
+        } else {
+          toast.success('Usuario registrado')
+        }
+      } catch (error) {
+        toast.info(error.message)
+      }
+      navigate(authUrls.login)
     }
   })
+
+  const getClassNames = (field) => {
+    return `block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset 
+            ${formik.touched[field] && formik.errors[field]
+              ? 'ring-red-500'
+              : 'ring-gray-300'} 
+            placeholder:text-gray-400 focus:ring-2 focus:ring-inset 
+            focus:ring-indigo-600 sm:text-sm sm:leading-6`
+  }
 
   return (
     <>
@@ -65,11 +98,16 @@ export function RegisterPage () {
                   name='email'
                   type='email'
                   autoComplete='email'
-                  className='block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  className={getClassNames('email')}
                   value={formik.values.email}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
+                {formik.touched.email && formik.errors.email
+                  ? (
+                    <div className='text-red-500 text-sm'>{formik.errors.email}</div>
+                    )
+                  : null}
               </div>
             </div>
 
@@ -82,11 +120,16 @@ export function RegisterPage () {
                   id='first_name'
                   name='first_name'
                   type='text'
-                  className='block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  className={getClassNames('first_name')}
                   value={formik.values.first_name}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
+                {formik.touched.first_name && formik.errors.first_name
+                  ? (
+                    <div className='text-red-500 text-sm'>{formik.errors.first_name}</div>
+                    )
+                  : null}
               </div>
             </div>
 
@@ -99,11 +142,16 @@ export function RegisterPage () {
                   id='last_name'
                   name='last_name'
                   type='text'
-                  className='block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  className={getClassNames('last_name')}
                   value={formik.values.last_name}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
+                {formik.touched.last_name && formik.errors.last_name
+                  ? (
+                    <div className='text-red-500 text-sm'>{formik.errors.last_name}</div>
+                    )
+                  : null}
               </div>
             </div>
 
@@ -115,7 +163,7 @@ export function RegisterPage () {
                 <select
                   id='gender'
                   name='gender'
-                  className='block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  className={getClassNames('gender')}
                   value={formik.values.gender}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -126,6 +174,11 @@ export function RegisterPage () {
                     </option>
                   ))}
                 </select>
+                {formik.touched.gender && formik.errors.gender
+                  ? (
+                    <div className='text-red-500 text-sm'>{formik.errors.gender}</div>
+                    )
+                  : null}
               </div>
             </div>
 
@@ -138,11 +191,16 @@ export function RegisterPage () {
                   id='birth_date'
                   name='birth_date'
                   type='date'
-                  className='block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  className={getClassNames('birth_date')}
                   value={formik.values.birth_date}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
+                {formik.touched.birth_date && formik.errors.birth_date
+                  ? (
+                    <div className='text-red-500 text-sm'>{formik.errors.birth_date}</div>
+                    )
+                  : null}
               </div>
             </div>
 
@@ -155,11 +213,16 @@ export function RegisterPage () {
                   id='password'
                   name='password'
                   type='password'
-                  className='block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  className={getClassNames('password')}
                   value={formik.values.password}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
+                {formik.touched.password && formik.errors.password
+                  ? (
+                    <div className='text-red-500 text-sm'>{formik.errors.password}</div>
+                    )
+                  : null}
               </div>
             </div>
 
@@ -173,11 +236,16 @@ export function RegisterPage () {
                   name='password2'
                   type='password'
                   required
-                  className='block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  className={getClassNames('password2')}
                   value={formik.values.password2}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
+                {formik.touched.password2 && formik.errors.password2
+                  ? (
+                    <div className='text-red-500 text-sm'>{formik.errors.password2}</div>
+                    )
+                  : null}
               </div>
             </div>
 

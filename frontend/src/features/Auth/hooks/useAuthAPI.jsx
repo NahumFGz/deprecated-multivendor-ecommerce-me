@@ -1,4 +1,4 @@
-import { loginAccessApi, authMeApi, resetPasswordApi } from '../../../services/api/authAPI'
+import { loginAccessApi, authMeApi, resetPasswordApi, registerApi } from '../../../services/api/authAPI'
 import { useAuthStore } from '../../../store/useAuthStore'
 
 export function useAuthAPI () {
@@ -31,5 +31,14 @@ export function useAuthAPI () {
     }
   }
 
-  return { loginAccess, authMe, resetPassword }
+  const registerUser = async (values) => {
+    try {
+      const response = await registerApi(values)
+      return response
+    } catch (error) {
+      throw new Error('Error registering user')
+    }
+  }
+
+  return { loginAccess, authMe, resetPassword, registerUser }
 }
