@@ -1,12 +1,30 @@
-export function ForgotPasswordForm () {
-  return (
+import * as Yup from 'yup'
+import { useFormik } from 'formik'
 
+export function ForgotPasswordForm () {
+  const formik = useFormik({
+    initialValues: {
+      email: ''
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email('Correo inválido').required('Requerido')
+    }),
+    onSubmit: async (values) => {
+      console.log(values)
+    }
+  })
+
+  return (
     <div className='p-2'>
       <h3 className='text-base font-semibold leading-6 text-gray-900'>¿Olvidaste tu contraseña?</h3>
       <div className='mt-2 max-w-xl text-sm text-gray-500'>
         <p>Ingresa tu correo y recibirás un mensaje con el enlace de recuperación.</p>
       </div>
-      <form className='mt-5 sm:flex sm:items-center'>
+      <form
+        className='mt-5 sm:flex sm:items-center'
+        noValidate
+        onSubmit={formik.handleSubmit}
+      >
         <div className='w-full sm:max-w-xs'>
           <label htmlFor='email' className='sr-only'>
             Email
@@ -17,6 +35,9 @@ export function ForgotPasswordForm () {
             id='email'
             className='block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
             placeholder='your-mail@example.com'
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
         </div>
         <button

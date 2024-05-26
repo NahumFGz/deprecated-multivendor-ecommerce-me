@@ -1,4 +1,4 @@
-import { loginAccessApi, authMeApi } from '../../../services/api/authAPI'
+import { loginAccessApi, authMeApi, resetPasswordApi } from '../../../services/api/authAPI'
 import { useAuthStore } from '../../../store/useAuthStore'
 
 export function useAuthAPI () {
@@ -22,5 +22,14 @@ export function useAuthAPI () {
     }
   }
 
-  return { loginAccess, authMe }
+  const resetPassword = async (email) => {
+    try {
+      const response = await resetPasswordApi(email)
+      return response
+    } catch (error) {
+      throw new Error('Error sending email')
+    }
+  }
+
+  return { loginAccess, authMe, resetPassword }
 }
