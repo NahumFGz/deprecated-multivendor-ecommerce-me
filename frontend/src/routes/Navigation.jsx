@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Tests } from '../components/Tests'
-import { Protected } from './ProtectedRoute'
+import { ProtectedRoutes } from './ProtectedRoutes'
 import { Dashboard } from '../components/Dashboard'
 import { HomePage } from '../features/Home/pages/HomePage'
 import { LoginPage } from '../features/Auth/pages/LoginPage'
@@ -13,7 +13,10 @@ export function Navigation () {
         <Route path='/home' element={<HomePage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/tests' element={<Tests />} />
-        <Route path='/dashboard' element={<Protected> <Dashboard /> </Protected>} />
+
+        <Route element={<ProtectedRoutes />}>
+          <Route path='/dashboard' element={<Dashboard />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )
