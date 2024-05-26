@@ -12,7 +12,7 @@ export function Navigation () {
         <Route path='/' element={<Navigate to='/home' />} />
         <Route path='/home' element={<HomePage />} />
         <Route path='/tests' element={<Tests />} />
-        <Route path='/auth/*' element={<AuthRoutes />} />
+        <Route path='/*' element={<AuthRoutes />} />
 
         <Route element={<ProtectedRoutes />}>
           <Route path='/dashboard' element={<Dashboard />} />

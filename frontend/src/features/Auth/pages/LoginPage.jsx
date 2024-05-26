@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useLoginForm } from '../hooks/useLoginForm'
+import { Link } from 'react-router-dom'
 
 export function LoginPage () {
   const { formik, isAuth, navigate } = useLoginForm()
@@ -53,9 +54,12 @@ export function LoginPage () {
                 Password
               </label>
               <div className='text-sm'>
-                <a href='#' className='font-semibold text-indigo-600 hover:text-indigo-500'>
+                <Link
+                  to='/forgot-password'
+                  className='font-semibold text-indigo-600 hover:text-indigo-500'
+                >
                   Forgot password?
-                </a>
+                </Link>
               </div>
             </div>
             <div className='mt-2'>
