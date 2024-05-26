@@ -4,15 +4,15 @@ import { RegisterPage } from '../pages/RegisterPage'
 import { ForgotPasswordPage } from '../pages/ForgotPasswordPage'
 import { AuthLayout } from '../../../layouts/AuthLayout'
 import { PasswordResetConfirmPage } from '../pages/PasswordResetConfirm'
-import { authPaths } from './AuthUrls'
+import { authUrls as urls } from './authUrls'
 
 export function AuthRoutes () {
   return (
     <Routes>
-      <Route path={authPaths.login} element={<AuthLayout><LoginPage /></AuthLayout>} />
-      <Route path={authPaths.register} element={<AuthLayout><RegisterPage /></AuthLayout>} />
-      <Route path={authPaths.forgotPassword} element={<AuthLayout><ForgotPasswordPage /></AuthLayout>} />
-      <Route path={authPaths.passwordResetConfirm} element={<AuthLayout><PasswordResetConfirmPage /></AuthLayout>} />
+      <Route path={urls.login} element={<AuthLayout><LoginPage /></AuthLayout>} />
+      <Route path={urls.register} element={<AuthLayout><RegisterPage /></AuthLayout>} />
+      <Route path={urls.forgotPassword} element={<AuthLayout><ForgotPasswordPage /></AuthLayout>} />
+      <Route path={urls.passwordResetConfirm} element={<AuthLayout><PasswordResetConfirmPage /></AuthLayout>} />
     </Routes>
   )
 }

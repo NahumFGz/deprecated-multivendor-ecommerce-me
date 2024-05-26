@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useLoginForm } from '../hooks/useLoginForm'
 import { Link } from 'react-router-dom'
+import { authUrls } from '../routes/authUrls'
 
 export function LoginPage () {
   const { formik, isAuth, navigate } = useLoginForm()
@@ -55,7 +56,7 @@ export function LoginPage () {
               </label>
               <div className='text-sm'>
                 <Link
-                  to='/forgot-password'
+                  to={authUrls.forgotPassword}
                   className='font-semibold text-indigo-600 hover:text-indigo-500'
                 >
                   Forgot password?
@@ -88,9 +89,12 @@ export function LoginPage () {
 
         <p className='mt-10 text-center text-sm text-gray-500'>
           Not a member?{' '}
-          <a href='#' className='font-semibold leading-6 text-indigo-600 hover:text-indigo-500'>
+          <Link
+            to={authUrls.register}
+            className='font-semibold leading-6 text-indigo-600 hover:text-indigo-500'
+          >
             Sign up now
-          </a>
+          </Link>
         </p>
       </div>
     </div>
