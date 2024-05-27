@@ -16,7 +16,8 @@ import {
 } from '@headlessui/react'
 import {
   Bars3Icon,
-  XMarkIcon
+  XMarkIcon,
+  ChevronDownIcon
 } from '@heroicons/react/24/outline'
 import { useAuthStore } from '../../../store/useAuthStore'
 
@@ -223,7 +224,7 @@ export function Header () {
           <div className='bg-white'>
             <div className='mx-auto max-w-7xl px-2 sm:px-4 lg:px-6'>
               <div className='border-b border-gray-200'>
-                <div className='flex h-16 items-center justify-between'>
+                <div className='flex h-16 items-center justify-center'>
                   <div className='hidden h-full lg:flex'>
                     {/* Flyout menus */}
                     <PopoverGroup className='inset-x-0 bottom-0 px-4'>
@@ -242,6 +243,7 @@ export function Header () {
                                     )}
                                   >
                                     {category.name}
+                                    <ChevronDownIcon className='m-2 h-4' aria-hidden='true' />
                                   </PopoverButton>
                                 </div>
 
