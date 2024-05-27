@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { authUrls } from '../routes/authUrls'
 import { useRegisterForm } from '../hooks/useRegisterForm'
+import { useId } from 'react'
 
 const genderOptions = [
   { value: '', label: 'Seleccione su género' },
@@ -11,6 +12,13 @@ const genderOptions = [
 
 export function RegisterPage () {
   const { formik } = useRegisterForm()
+  const emailId = useId()
+  const firstNameId = useId()
+  const lastNameId = useId()
+  const genderId = useId()
+  const birthDateId = useId()
+  const passwordId = useId()
+  const password2Id = useId()
 
   const getClassNames = (field) => {
     return `block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset 
@@ -42,12 +50,12 @@ export function RegisterPage () {
             onSubmit={formik.handleSubmit}
           >
             <div>
-              <label htmlFor='email' className='block text-sm font-medium leading-6 text-gray-900'>
+              <label htmlFor={emailId} className='block text-sm font-medium leading-6 text-gray-900'>
                 Correo electrónico
               </label>
               <div className='mt-2'>
                 <input
-                  id='email'
+                  id={emailId}
                   name='email'
                   type='email'
                   autoComplete='email'
@@ -65,12 +73,12 @@ export function RegisterPage () {
             </div>
 
             <div>
-              <label htmlFor='first_name' className='block text-sm font-medium leading-6 text-gray-900'>
+              <label htmlFor={firstNameId} className='block text-sm font-medium leading-6 text-gray-900'>
                 Nombre(s)
               </label>
               <div className='mt-2'>
                 <input
-                  id='first_name'
+                  id={firstNameId}
                   name='first_name'
                   type='text'
                   className={getClassNames('first_name')}
@@ -87,12 +95,12 @@ export function RegisterPage () {
             </div>
 
             <div>
-              <label htmlFor='last_name' className='block text-sm font-medium leading-6 text-gray-900'>
+              <label htmlFor={lastNameId} className='block text-sm font-medium leading-6 text-gray-900'>
                 Apellidos
               </label>
               <div className='mt-2'>
                 <input
-                  id='last_name'
+                  id={lastNameId}
                   name='last_name'
                   type='text'
                   className={getClassNames('last_name')}
@@ -109,12 +117,12 @@ export function RegisterPage () {
             </div>
 
             <div>
-              <label htmlFor='gender' className='block text-sm font-medium leading-6 text-gray-900'>
+              <label htmlFor={genderId} className='block text-sm font-medium leading-6 text-gray-900'>
                 Género
               </label>
               <div className='mt-2'>
                 <select
-                  id='gender'
+                  id={genderId}
                   name='gender'
                   className={getClassNames('gender')}
                   value={formik.values.gender}
@@ -136,12 +144,12 @@ export function RegisterPage () {
             </div>
 
             <div>
-              <label htmlFor='birth_date' className='block text-sm font-medium leading-6 text-gray-900'>
+              <label htmlFor={birthDateId} className='block text-sm font-medium leading-6 text-gray-900'>
                 Fecha de nacimiento
               </label>
               <div className='mt-2'>
                 <input
-                  id='birth_date'
+                  id={birthDateId}
                   name='birth_date'
                   type='date'
                   className={getClassNames('birth_date')}
@@ -158,12 +166,12 @@ export function RegisterPage () {
             </div>
 
             <div>
-              <label htmlFor='password' className='block text-sm font-medium leading-6 text-gray-900'>
+              <label htmlFor={passwordId} className='block text-sm font-medium leading-6 text-gray-900'>
                 Contraseña
               </label>
               <div className='mt-2'>
                 <input
-                  id='password'
+                  id={passwordId}
                   name='password'
                   type='password'
                   className={getClassNames('password')}
@@ -180,12 +188,12 @@ export function RegisterPage () {
             </div>
 
             <div>
-              <label htmlFor='password2' className='block text-sm font-medium leading-6 text-gray-900'>
+              <label htmlFor={password2Id} className='block text-sm font-medium leading-6 text-gray-900'>
                 Confirmar contraseña
               </label>
               <div className='mt-2'>
                 <input
-                  id='password2'
+                  id={password2Id}
                   name='password2'
                   type='password'
                   required

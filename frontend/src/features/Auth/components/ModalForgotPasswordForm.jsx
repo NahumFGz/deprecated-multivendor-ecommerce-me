@@ -1,7 +1,9 @@
+import { useId } from 'react'
 import { useForgotPasswordForm } from '../hooks/useForgotPasswordForm'
 
 export function ModalForgotPasswordForm ({ onClose, getEmail }) {
   const { formik } = useForgotPasswordForm({ onClose, getEmail })
+  const emailId = useId()
 
   return (
     <div className='p-2'>
@@ -15,13 +17,13 @@ export function ModalForgotPasswordForm ({ onClose, getEmail }) {
         onSubmit={formik.handleSubmit}
       >
         <div className='w-full sm:max-w-xs'>
-          <label htmlFor='email' className='sr-only'>
+          <label htmlFor={emailId} className='sr-only'>
             Email
           </label>
           <input
             type='email'
             name='email'
-            id='email'
+            id={emailId}
             className={`block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 ${
               formik.touched.email && formik.errors.email ? 'ring-red-500 focus:ring-red-500' : 'ring-gray-300 focus:ring-indigo-600'
             }`}

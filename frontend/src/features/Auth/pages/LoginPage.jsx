@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useId } from 'react'
 import { useLoginForm } from '../hooks/useLoginForm'
 import { Link } from 'react-router-dom'
 import { authUrls } from '../routes/authUrls'
@@ -7,6 +7,8 @@ import { ModalForgotPasswordForm } from '../components/ModalForgotPasswordForm'
 
 export function LoginPage () {
   const { formik, isAuth, navigate, isModalOpen, openModal, closeModal } = useLoginForm()
+  const emailId = useId()
+  const passwordId = useId()
 
   useEffect(() => {
     if (isAuth) navigate('/home')
@@ -34,12 +36,12 @@ export function LoginPage () {
           noValidate
         >
           <div>
-            <label htmlFor='email' className='block text-sm font-medium leading-6 text-gray-900'>
+            <label htmlFor={emailId} className='block text-sm font-medium leading-6 text-gray-900'>
               Email address
             </label>
             <div className='mt-2'>
               <input
-                id='email'
+                id={emailId}
                 name='email'
                 type='email'
                 autoComplete='email'
@@ -53,7 +55,7 @@ export function LoginPage () {
 
           <div>
             <div className='flex items-center justify-between'>
-              <label htmlFor='password' className='block text-sm font-medium leading-6 text-gray-900'>
+              <label htmlFor={passwordId} className='block text-sm font-medium leading-6 text-gray-900'>
                 Password
               </label>
               <div className='text-sm'>
@@ -68,7 +70,7 @@ export function LoginPage () {
             </div>
             <div className='mt-2'>
               <input
-                id='password'
+                id={passwordId}
                 name='password'
                 type='password'
                 autoComplete='current-password'

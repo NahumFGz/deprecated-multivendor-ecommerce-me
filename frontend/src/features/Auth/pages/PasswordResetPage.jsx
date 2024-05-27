@@ -1,10 +1,13 @@
 import { useParams, Link } from 'react-router-dom'
 import { authUrls } from '../routes/authUrls'
 import { usePasswordResetForm } from '../hooks/usePasswordResetForm'
+import { useId } from 'react'
 
 export function PasswordResetPage () {
   const { uid, token } = useParams()
   const { formik } = usePasswordResetForm({ uid, token })
+  const password1Id = useId()
+  const password2Id = useId()
 
   const getClassNames = (field) => {
     return `block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${formik.touched[field] && formik.errors[field] ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`
@@ -31,12 +34,12 @@ export function PasswordResetPage () {
             onSubmit={formik.handleSubmit}
           >
             <div>
-              <label htmlFor='password1' className='block text-sm font-medium leading-6 text-gray-900'>
+              <label htmlFor={password1Id} className='block text-sm font-medium leading-6 text-gray-900'>
                 Nueva contraseña
               </label>
               <div className='mt-2'>
                 <input
-                  id='password1'
+                  id={password1Id}
                   name='password1'
                   type='password'
                   className={getClassNames('password1')}
@@ -53,12 +56,12 @@ export function PasswordResetPage () {
             </div>
 
             <div>
-              <label htmlFor='password2' className='block text-sm font-medium leading-6 text-gray-900'>
+              <label htmlFor={password2Id} className='block text-sm font-medium leading-6 text-gray-900'>
                 Confirmar nueva contraseña
               </label>
               <div className='mt-2'>
                 <input
-                  id='password2'
+                  id={password2Id}
                   name='password2'
                   type='password'
                   className={getClassNames('password2')}
