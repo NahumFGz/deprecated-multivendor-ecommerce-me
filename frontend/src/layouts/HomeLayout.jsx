@@ -21,6 +21,12 @@ export function HomeLayout ({ children }) {
 
   return (
     <>
+      <TestHeader />
+      <div>
+        {children}
+      </div>
+
+      <hr className='border mt-10' />
       <div className='flex flex-row gap-14'>
         <h1>Home Layout</h1>
         {
@@ -31,10 +37,7 @@ export function HomeLayout ({ children }) {
         <h1 onClick={handleLogout} className='text-red-400 cursor-pointer'>Logout</h1>
       </div>
       <hr className='border' />
-      <TestHeader />
-      <div>
-        {children}
-      </div>
+
     </>
   )
 }
