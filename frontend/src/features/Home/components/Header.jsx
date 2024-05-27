@@ -231,18 +231,6 @@ export function Header () {
                     {/* Flyout menus */}
                     <PopoverGroup className='inset-x-0 bottom-0 px-4'>
                       <div className='flex h-full justify-center space-x-8'>
-                        {/* Logo (lg+) */}
-                        <div className='hidden lg:flex lg:flex-1 lg:items-center'>
-                          <a href='#'>
-                            <span className='sr-only'>Your Company</span>
-                            <img
-                              className='h-8 w-auto'
-                              src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
-                              alt=''
-                            />
-                          </a>
-                        </div>
-
                         {navigation.categories.map((category) => (
                           <Popover key={category.name} className='flex'>
                             {({ open }) => (

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useAuthStore } from '../../../store/useAuthStore'
 import { useAuthAPI } from '../../Auth/hooks/useAuthAPI'
 import { Header } from '../components/Header'
+import { HeaderSearch } from '../components/HeaderSearch'
 
 export function HomeLayout ({ children }) {
   const cleanStore = useAuthStore((store) => store.cleanStore)
@@ -21,6 +22,7 @@ export function HomeLayout ({ children }) {
 
   return (
     <>
+      <HeaderSearch />
       <Header />
       <div>
         {children}
