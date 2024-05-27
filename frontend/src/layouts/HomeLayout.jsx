@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useAuthStore } from '../store/useAuthStore'
 import { useAuthAPI } from '../features/Auth/hooks/useAuthAPI'
+import { TestHeader } from './TestHeader'
 
 export function HomeLayout ({ children }) {
   const cleanStore = useAuthStore((store) => store.cleanStore)
@@ -30,6 +31,7 @@ export function HomeLayout ({ children }) {
         <h1 onClick={handleLogout} className='text-red-400 cursor-pointer'>Logout</h1>
       </div>
       <hr className='border' />
+      <TestHeader />
       <div>
         {children}
       </div>
