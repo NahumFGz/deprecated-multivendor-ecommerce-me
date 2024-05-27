@@ -224,25 +224,25 @@ export function Header () {
         <nav aria-label='Top'>
           {/* Secondary navigation */}
           <div className='bg-white'>
-            <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+            <div className='mx-auto max-w-7xl px-2 sm:px-4 lg:px-6'>
               <div className='border-b border-gray-200'>
                 <div className='flex h-16 items-center justify-between'>
-                  {/* Logo (lg+) */}
-                  <div className='hidden lg:flex lg:flex-1 lg:items-center'>
-                    <a href='#'>
-                      <span className='sr-only'>Your Company</span>
-                      <img
-                        className='h-8 w-auto'
-                        src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
-                        alt=''
-                      />
-                    </a>
-                  </div>
-
                   <div className='hidden h-full lg:flex'>
                     {/* Flyout menus */}
                     <PopoverGroup className='inset-x-0 bottom-0 px-4'>
                       <div className='flex h-full justify-center space-x-8'>
+                        {/* Logo (lg+) */}
+                        <div className='hidden lg:flex lg:flex-1 lg:items-center'>
+                          <a href='#'>
+                            <span className='sr-only'>Your Company</span>
+                            <img
+                              className='h-8 w-auto'
+                              src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
+                              alt=''
+                            />
+                          </a>
+                        </div>
+
                         {navigation.categories.map((category) => (
                           <Popover key={category.name} className='flex'>
                             {({ open }) => (
