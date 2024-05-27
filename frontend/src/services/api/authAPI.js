@@ -93,10 +93,11 @@ export async function resetPasswordApi (email) {
   }
 }
 
-export async function resetPasswordConfirmApi (newPassword, uid, token) {
+export async function resetPasswordConfirmApi (resetPasswordConfirmData) {
   try {
+    const { uidb64, token } = resetPasswordConfirmData
     const axiosInstance = createAxiosInstance()
-    const response = await axiosInstance.post(`/api/auth/password-reset-confirm/${uid}/${token}`, { newPassword, uid, token })
+    const response = await axiosInstance.post(`/api/auth/password-reset-confirm/${uidb64}/${token}/`, resetPasswordConfirmData)
     const { data, status } = response
 
     if (status === 200) {

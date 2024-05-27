@@ -1,4 +1,4 @@
-import { loginAccessApi, authMeApi, resetPasswordApi, registerApi } from '../../../services/api/authAPI'
+import { loginAccessApi, authMeApi, resetPasswordApi, registerApi, resetPasswordConfirmApi } from '../../../services/api/authAPI'
 import { useAuthStore } from '../../../store/useAuthStore'
 
 export function useAuthAPI () {
@@ -40,5 +40,14 @@ export function useAuthAPI () {
     }
   }
 
-  return { loginAccess, authMe, resetPassword, registerUser }
+  const resetPasswordConfirm = async (values) => {
+    try {
+      const response = await resetPasswordConfirmApi(values)
+      return response
+    } catch (error) {
+      throw new Error('Error resetting password')
+    }
+  }
+
+  return { loginAccess, authMe, resetPassword, registerUser, resetPasswordConfirm }
 }

@@ -3,9 +3,11 @@ import { useParams, Link } from 'react-router-dom'
 import { authUrls } from '../routes/authUrls'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useAuthAPI } from '../hooks/useAuthAPI'
 
 export function PasswordResetPage () {
   const { uid, token } = useParams()
+  const { resetPasswordConfirm } = useAuthAPI()
 
   useEffect(() => {
     console.log('id:', uid)
@@ -30,11 +32,11 @@ export function PasswordResetPage () {
     }),
     onSubmit: async (values) => {
       const newValues = {
-        password: values.password1,
-        uid,
+        new_password: values.password1,
+        uidb64: uid,
         token
       }
-      console.log(newValues)
+      await resetPasswordConfirm(newValues)
     }
   })
 
