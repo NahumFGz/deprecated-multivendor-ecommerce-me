@@ -7,7 +7,7 @@ function App () {
       <Navigation />
       <ToastContainer
         position='bottom-center'
-        autoClose={4000}
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop
         closeOnClick
@@ -15,6 +15,7 @@ function App () {
         pauseOnFocusLoss
         draggable
         pauseOnHover={false}
+        limit={1}
       />
     </>
   )

@@ -1,18 +1,14 @@
-import { useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import { authUrls } from '../routes/authUrls'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useAuthAPI } from '../hooks/useAuthAPI'
+import { toast } from 'react-toastify'
 
 export function PasswordResetPage () {
   const { uid, token } = useParams()
   const { resetPasswordConfirm } = useAuthAPI()
-
-  useEffect(() => {
-    console.log('id:', uid)
-    console.log('token:', token)
-  }, [uid, token])
+  const navigate = useNavigate()
 
   const formik = useFormik({
     initialValues: {
@@ -36,7 +32,13 @@ export function PasswordResetPage () {
         uidb64: uid,
         token
       }
-      await resetPasswordConfirm(newValues)
+      try {
+        await resetPasswordConfirm(newValues)
+        toast.success('Contraseña actualizada')
+        navigate(authUrls.login)
+      } catch (error) {
+        toast.error('Token inválido, solicita un nuevo correo de recuperación')
+      }
     }
   })
 
