@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
-import { useAuthStore } from '../store/useAuthStore'
-import { useAuthAPI } from '../features/Auth/hooks/useAuthAPI'
+
 import { TestHeader } from './TestHeader'
+import { useAuthStore } from '../../../store/useAuthStore'
+import { useAuthAPI } from '../../Auth/hooks/useAuthAPI'
 
 export function HomeLayout ({ children }) {
   const cleanStore = useAuthStore((store) => store.cleanStore)
