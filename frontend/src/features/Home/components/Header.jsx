@@ -196,12 +196,12 @@ export function Header () {
                 <div className='space-y-6 border-t border-gray-200 px-4 py-6'>
                   <div className='flow-root'>
                     <a href='#' className='-m-2 block p-2 font-medium text-gray-900'>
-                      Create an account
+                      {isAuth ? 'Ver Perfil' : 'Create an account'}
                     </a>
                   </div>
                   <div className='flow-root'>
                     <a href='#' className='-m-2 block p-2 font-medium text-gray-900'>
-                      Sign in
+                      {isAuth ? `Hi ${profile.first_name}!` : 'Sign in'}
                     </a>
                   </div>
                 </div>
@@ -266,10 +266,10 @@ export function Header () {
 
               <div className='flex items-center space-x-6'>
                 <a href='#' className='text-sm font-medium text-white hover:text-gray-100'>
-                  Sign in
+                  {isAuth ? `Hi ${profile.first_name}!` : 'Sign in'}
                 </a>
                 <a href='#' className='text-sm font-medium text-white hover:text-gray-100'>
-                  Create an account
+                  {isAuth ? 'Ver Perfil' : 'Create an account'}
                 </a>
               </div>
             </div>
