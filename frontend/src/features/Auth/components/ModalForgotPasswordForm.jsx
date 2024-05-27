@@ -3,7 +3,7 @@ import { useFormik } from 'formik'
 import { toast } from 'react-toastify'
 import { useAuthAPI } from '../hooks/useAuthAPI'
 
-export function ModalForgotPasswordForm ({ onClose, getEmail }) {
+export const useForgotPasswordForm = ({ onClose, getEmail }) => {
   const { resetPassword } = useAuthAPI()
 
   const formik = useFormik({
@@ -23,6 +23,12 @@ export function ModalForgotPasswordForm ({ onClose, getEmail }) {
       }
     }
   })
+
+  return { formik }
+}
+
+export function ModalForgotPasswordForm ({ onClose, getEmail }) {
+  const { formik } = useForgotPasswordForm({ onClose, getEmail })
 
   return (
     <div className='p-2'>

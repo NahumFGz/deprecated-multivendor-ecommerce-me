@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useLoginForm } from '../hooks/useLoginForm'
 import { Link } from 'react-router-dom'
 import { authUrls } from '../routes/authUrls'
@@ -6,11 +6,7 @@ import { ModalBase } from '../components/ModalBase'
 import { ModalForgotPasswordForm } from '../components/ModalForgotPasswordForm'
 
 export function LoginPage () {
-  const { formik, isAuth, navigate } = useLoginForm()
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
-  const openModal = () => setIsModalOpen(true)
-  const closeModal = () => setIsModalOpen(false)
+  const { formik, isAuth, navigate, isModalOpen, openModal, closeModal } = useLoginForm()
 
   useEffect(() => {
     if (isAuth) navigate('/home')

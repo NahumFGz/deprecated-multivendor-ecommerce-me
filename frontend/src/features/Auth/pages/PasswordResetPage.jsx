@@ -5,8 +5,7 @@ import * as Yup from 'yup'
 import { useAuthAPI } from '../hooks/useAuthAPI'
 import { toast } from 'react-toastify'
 
-export function PasswordResetPage () {
-  const { uid, token } = useParams()
+export const usePasswordResetForm = ({ uid, token }) => {
   const { resetPasswordConfirm } = useAuthAPI()
   const navigate = useNavigate()
 
@@ -41,6 +40,13 @@ export function PasswordResetPage () {
       }
     }
   })
+
+  return { formik }
+}
+
+export function PasswordResetPage () {
+  const { uid, token } = useParams()
+  const { formik } = usePasswordResetForm({ uid, token })
 
   const getClassNames = (field) => {
     return `block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${formik.touched[field] && formik.errors[field] ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`

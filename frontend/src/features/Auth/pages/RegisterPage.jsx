@@ -12,7 +12,7 @@ const genderOptions = [
   { value: 'O', label: 'Otro' }
 ]
 
-export function RegisterPage () {
+export const useRegisterForm = () => {
   const { registerUser } = useAuthAPI()
   const navigate = useNavigate()
   const formik = useFormik({
@@ -58,6 +58,12 @@ export function RegisterPage () {
       navigate(authUrls.login)
     }
   })
+
+  return { formik }
+}
+
+export function RegisterPage () {
+  const { formik } = useRegisterForm()
 
   const getClassNames = (field) => {
     return `block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset 

@@ -4,12 +4,17 @@ import { useAuthStore } from '../../../store/useAuthStore'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { useAuthAPI } from './useAuthAPI'
+import { useState } from 'react'
 
 export const useLoginForm = () => {
   const { loginAccess } = useAuthAPI()
   const setToken = useAuthStore((store) => store.setToken)
   const isAuth = useAuthStore((store) => store.isAuth)
   const navigate = useNavigate()
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const openModal = () => setIsModalOpen(true)
+  const closeModal = () => setIsModalOpen(false)
 
   const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email address').required('Required'),
@@ -33,5 +38,5 @@ export const useLoginForm = () => {
     }
   })
 
-  return { formik, navigate, isAuth }
+  return { formik, navigate, isAuth, isModalOpen, openModal, closeModal }
 }
