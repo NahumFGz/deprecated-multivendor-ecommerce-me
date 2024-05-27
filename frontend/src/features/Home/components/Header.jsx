@@ -22,6 +22,7 @@ import {
   XMarkIcon
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { useAuthStore } from '../../../store/useAuthStore'
 
 const currencies = ['PEN', 'USD']
 const navigation = {
@@ -98,6 +99,10 @@ function classNames (...classes) {
 
 export function Header () {
   const [open, setOpen] = useState(false)
+  const profile = useAuthStore((store) => store.profile)
+  const isAuth = useAuthStore((store) => store.isAuth)
+  console.log('profile', profile)
+  console.log('isAuth', isAuth)
 
   return (
     <div className='bg-white'>
