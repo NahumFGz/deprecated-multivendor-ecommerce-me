@@ -27,7 +27,7 @@ const currencies = ['PEN', 'USD']
 const navigation = {
   categories: [
     {
-      name: 'Women',
+      name: 'Yu-Gi-Oh!',
       featured: [
         {
           name: 'New Arrivals',
@@ -56,7 +56,7 @@ const navigation = {
       ]
     },
     {
-      name: 'Men',
+      name: 'Pokemon',
       featured: [
         {
           name: 'New Arrivals',
@@ -87,8 +87,8 @@ const navigation = {
     }
   ],
   pages: [
-    { name: 'Company', href: '#' },
-    { name: 'Stores', href: '#' }
+    { name: 'Juegos de Mesa', href: '#' },
+    { name: 'Marketplace', href: '#' }
   ]
 }
 
@@ -96,7 +96,7 @@ function classNames (...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export function TestHeader () {
+export function Header () {
   const [open, setOpen] = useState(false)
 
   return (
