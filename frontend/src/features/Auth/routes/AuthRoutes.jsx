@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { LoginPage } from '../pages/LoginPage'
 import { RegisterPage } from '../pages/RegisterPage'
-import { AuthLayout } from '../../../layouts/AuthLayout'
+import { AuthLayout } from '../layouts/AuthLayout'
 import { PasswordResetPage } from '../pages/PasswordResetPage'
 import { authUrls as urls, authBasePath as baseUrl } from './authUrls'
 
