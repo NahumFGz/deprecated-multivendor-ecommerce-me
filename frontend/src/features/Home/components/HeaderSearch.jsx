@@ -5,7 +5,7 @@ export function HeaderSearch () {
     <div className='bg-white'>
       <header className='relative bg-gray-900'>
         <nav aria-label='Top' className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-          <div className='flex items-center justify-between h-10 sm:h-12 md:h-14 lg:h-16 xl:h-20'>
+          <div className='flex items-center justify-between h-10 sm:h-12 lg:h-16 xl:h-20'>
             {/* Logo */}
             <div className='flex items-center'>
               <a href='#'>
@@ -19,13 +19,13 @@ export function HeaderSearch () {
             </div>
 
             {/* Search */}
-            <div className='flex-1 mx-20 hidden md:block'>
+            <div className='flex-1 mx-20 hidden lg:block'>
               <div className='relative'>
                 <MagnifyingGlassIcon className='absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500' />
                 <input
                   type='text'
                   placeholder='Search products'
-                  className='w-full pl-10 pr-4 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 md:py-1.5 lg:py-2 xl:py-2.5'
+                  className='md:py-1 lg:py-2 xl:py-2.5 w-full pl-10 pr-4 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500'
                 />
               </div>
             </div>

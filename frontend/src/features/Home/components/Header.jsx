@@ -16,9 +16,6 @@ import {
 } from '@headlessui/react'
 import {
   Bars3Icon,
-  MagnifyingGlassIcon,
-  QuestionMarkCircleIcon,
-  ShoppingCartIcon,
   XMarkIcon
 } from '@heroicons/react/24/outline'
 import { useAuthStore } from '../../../store/useAuthStore'
@@ -316,10 +313,7 @@ export function Header () {
                     </button>
 
                     {/* Search */}
-                    <a href='#' className='ml-2 p-2 text-gray-400 hover:text-gray-500'>
-                      <span className='sr-only'>Search</span>
-                      <MagnifyingGlassIcon className='h-6 w-6' aria-hidden='true' />
-                    </a>
+                    <span className='p-1 text-gray-400 hover:text-gray-500'>Menu</span>
                   </div>
 
                   {/* Logo (lg-) */}
@@ -331,35 +325,6 @@ export function Header () {
                       className='h-8 w-auto'
                     />
                   </a>
-
-                  <div className='flex flex-1 items-center justify-end'>
-                    <a href='#' className='hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block'>
-                      Search
-                    </a>
-
-                    <div className='flex items-center lg:ml-8'>
-                      {/* Help */}
-                      <a href='#' className='p-2 text-gray-400 hover:text-gray-500 lg:hidden'>
-                        <span className='sr-only'>Help</span>
-                        <QuestionMarkCircleIcon className='h-6 w-6' aria-hidden='true' />
-                      </a>
-                      <a href='#' className='hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block'>
-                        Help
-                      </a>
-
-                      {/* Cart */}
-                      <div className='ml-4 flow-root lg:ml-8'>
-                        <a href='#' className='group -m-2 flex items-center p-2'>
-                          <ShoppingCartIcon
-                            className='h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500'
-                            aria-hidden='true'
-                          />
-                          <span className='ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800'>0</span>
-                          <span className='sr-only'>items in cart, view bag</span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
