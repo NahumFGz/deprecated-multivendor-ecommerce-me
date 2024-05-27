@@ -176,7 +176,7 @@ export function Header () {
                           className={({ selected }) =>
                             classNames(
                               selected ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-900',
-                              'flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium'
+                              'flex-1 border-b-2 px-1 py-4 text-base font-medium'
                             )}
                         >
                           {category.name}
