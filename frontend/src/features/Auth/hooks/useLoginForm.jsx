@@ -7,8 +7,9 @@ import { useAuthAPI } from './useAuthAPI'
 import { useState } from 'react'
 
 export const useLoginForm = () => {
-  const { loginAccess } = useAuthAPI()
+  const { loginAccess, authMe } = useAuthAPI()
   const setToken = useAuthStore((store) => store.setToken)
+  const setProfile = useAuthStore((store) => store.setProfile)
   const isAuth = useAuthStore((store) => store.isAuth)
   const navigate = useNavigate()
 
@@ -29,8 +30,15 @@ export const useLoginForm = () => {
     validationSchema,
     onSubmit: async (values) => {
       try {
+        // Access the login API endpoint
         const response = await loginAccess(values.email, values.password)
         setToken(response)
+
+        // Get authenticated user profile
+        const responseMe = await authMe()
+        setProfile(responseMe)
+
+        // Redirect to the home page
         navigate('/home')
       } catch (error) {
         toast.error(error.message)
