@@ -17,7 +17,8 @@ import {
 import {
   Bars3Icon,
   XMarkIcon,
-  ChevronDownIcon
+  ChevronDownIcon,
+  MagnifyingGlassIcon
 } from '@heroicons/react/24/outline'
 import { useAuthStore } from '../../../store/useAuthStore'
 
@@ -339,23 +340,26 @@ export function Header () {
                       className='-ml-2 rounded-md bg-white p-2 text-gray-400'
                       onClick={() => setOpen(true)}
                     >
-                      <span className='sr-only'>Open menu</span>
-                      <Bars3Icon className='h-6 w-6' aria-hidden='true' />
+                      <div className='flex items-center justify-center'>
+                        <span className='sr-only'>Open menu</span>
+                        <Bars3Icon className='h-6 w-6' aria-hidden='true' />
+                        <span className='p-1 text-gray-400 hover:text-gray-500'>Menu</span>
+                      </div>
                     </button>
 
                     {/* Search */}
-                    <span className='p-1 text-gray-400 hover:text-gray-500'>Menu</span>
+                    <div className='flex-1 ml-8 sm:ml-32'>
+                      <div className='relative'>
+                        <MagnifyingGlassIcon className='absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400' />
+                        <input
+                          type='text'
+                          placeholder='Search products'
+                          className='md:py-1 lg:py-2 xl:py-2.5 w-full pl-10 pr-4 py-1 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500'
+                        />
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Logo (lg-) */}
-                  <a href='#' className='lg:hidden'>
-                    <span className='sr-only'>Your Company</span>
-                    <img
-                      src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
-                      alt=''
-                      className='h-8 w-auto'
-                    />
-                  </a>
                 </div>
               </div>
             </div>
