@@ -21,10 +21,8 @@ import {
   ShoppingCartIcon,
   XMarkIcon
 } from '@heroicons/react/24/outline'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { useAuthStore } from '../../../store/useAuthStore'
 
-const currencies = ['PEN', 'USD']
 const navigation = {
   categories: [
     {
@@ -196,39 +194,25 @@ export function Header () {
                 <div className='space-y-6 border-t border-gray-200 px-4 py-6'>
                   <div className='flow-root'>
                     <a href='#' className='-m-2 block p-2 font-medium text-gray-900'>
-                      {isAuth ? 'Ver Perfil' : 'Create an account'}
+                      {isAuth ? `Hi ${profile?.first_name}!` : 'Sign in'}
                     </a>
                   </div>
                   <div className='flow-root'>
                     <a href='#' className='-m-2 block p-2 font-medium text-gray-900'>
-                      {isAuth ? `Hi ${profile?.first_name}!` : 'Sign in'}
+                      {isAuth ? 'Ver Perfil' : 'Create an account'}
                     </a>
                   </div>
-                </div>
-
-                <div className='space-y-6 border-t border-gray-200 px-4 py-6'>
-                  {/* Currency selector */}
-                  <form>
-                    <div className='inline-block'>
-                      <label htmlFor='mobile-currency' className='sr-only'>
-                        Currency
-                      </label>
-                      <div className='group relative -ml-2 rounded-md border-transparent focus-within:ring-2 focus-within:ring-white'>
-                        <select
-                          id='mobile-currency'
-                          name='currency'
-                          className='flex items-center rounded-md border-transparent bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-gray-700 focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-800'
-                        >
-                          {currencies.map((currency) => (
-                            <option key={currency}>{currency}</option>
-                          ))}
-                        </select>
-                        <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center'>
-                          <ChevronDownIcon className='h-5 w-5 text-gray-500' aria-hidden='true' />
+                  {
+                    isAuth
+                      ? (
+                        <div className='flow-root'>
+                          <a href='#' className='-m-2 block p-2 font-medium text-gray-900'>
+                            Sign out
+                          </a>
                         </div>
-                      </div>
-                    </div>
-                  </form>
+                        )
+                      : null
+                  }
                 </div>
               </DialogPanel>
             </TransitionChild>
@@ -238,43 +222,6 @@ export function Header () {
 
       <header className='relative'>
         <nav aria-label='Top'>
-          {/* Top navigation */}
-          <div className='bg-gray-900'>
-            <div className='mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8'>
-              {/* Currency selector */}
-              <form>
-                <div>
-                  <label htmlFor='desktop-currency' className='sr-only'>
-                    Currency
-                  </label>
-                  <div className='group relative -ml-2 rounded-md border-transparent bg-gray-900 focus-within:ring-2 focus-within:ring-white'>
-                    <select
-                      id='desktop-currency'
-                      name='currency'
-                      className='flex items-center rounded-md border-transparent bg-gray-900 bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-white focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-100'
-                    >
-                      {currencies.map((currency) => (
-                        <option key={currency}>{currency}</option>
-                      ))}
-                    </select>
-                    <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center'>
-                      <ChevronDownIcon className='h-5 w-5 text-gray-300' aria-hidden='true' />
-                    </div>
-                  </div>
-                </div>
-              </form>
-
-              <div className='flex items-center space-x-6'>
-                <a href='#' className='text-sm font-medium text-white hover:text-gray-100'>
-                  {isAuth ? `Hi ${profile?.first_name}!` : 'Sign in'}
-                </a>
-                <a href='#' className='text-sm font-medium text-white hover:text-gray-100'>
-                  {isAuth ? 'Ver Perfil' : 'Create an account'}
-                </a>
-              </div>
-            </div>
-          </div>
-
           {/* Secondary navigation */}
           <div className='bg-white'>
             <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
