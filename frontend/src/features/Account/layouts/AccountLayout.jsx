@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react'
 import {
   Bars3Icon,
@@ -27,10 +27,9 @@ export function AccountLayout ({ children }) {
     { name: 'Ventas', to: accountUrls.selling, icon: CalendarIcon, current: location.pathname === accountUrls.selling },
     { name: 'Compras', to: accountUrls.shopping, icon: ChartPieIcon, current: location.pathname === accountUrls.shopping }
   ]
-  const teams = [
-    { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
-    { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
-    { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false }
+  const links = [
+    { id: 1, name: 'Go Home', href: '#', initial: 'H', current: false },
+    { id: 2, name: 'Go Marketplace', href: '#', initial: 'M', current: false }
   ]
 
   return (
@@ -106,9 +105,9 @@ export function AccountLayout ({ children }) {
                           </ul>
                         </li>
                         <li>
-                          <div className='text-xs font-semibold leading-6 text-gray-400'>Your teams</div>
+                          <div className='text-xs font-semibold leading-6 text-gray-400'>Links</div>
                           <ul role='list' className='-mx-2 mt-2 space-y-1'>
-                            {teams.map((team) => (
+                            {links.map((team) => (
                               <li key={team.name}>
                                 <a
                                   href={team.href}
@@ -171,9 +170,9 @@ export function AccountLayout ({ children }) {
                   </ul>
                 </li>
                 <li>
-                  <div className='text-xs font-semibold leading-6 text-gray-400'>Your teams</div>
+                  <div className='text-xs font-semibold leading-6 text-gray-400'>Links</div>
                   <ul role='list' className='-mx-2 mt-2 space-y-1'>
-                    {teams.map((team) => (
+                    {links.map((team) => (
                       <li key={team.name}>
                         <a
                           href={team.href}
