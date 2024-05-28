@@ -1,11 +1,11 @@
-import { Header } from '../components/Header'
-import { HeaderSearch } from '../components/HeaderSearch'
+import { HeaderPrimary } from '../components/HeaderPrimary'
+import { HeaderSecondadry } from '../components/HeaderSecondadry'
 
 export function HomeLayout ({ children }) {
   return (
     <>
-      <HeaderSearch />
-      <Header />
+      <HeaderPrimary />
+      <HeaderSecondadry />
       <div>
         {children}
       </div>

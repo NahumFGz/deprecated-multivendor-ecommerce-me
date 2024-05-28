@@ -50,7 +50,7 @@ export function ProfileDropdown ({ userName }) {
                     'block px-3 py-1 text-sm leading-6 text-gray-900'
                   )}
                 >
-                  Your profile
+                  Your account
                 </a>
               )}
             </MenuItem>

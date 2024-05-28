@@ -125,7 +125,7 @@ function classNames (...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export function Header () {
+export function HeaderSecondadry () {
   const [open, setOpen] = useState(false)
   const profile = useAuthStore((store) => store.profile)
   const isAuth = useAuthStore((store) => store.isAuth)
@@ -234,7 +234,7 @@ export function Header () {
                       to={authUrls.login}
                       className='-m-2 block p-2 font-medium text-gray-900'
                     >
-                      {isAuth ? 'Ver Perfil' : 'Login / Register'}
+                      {isAuth ? 'View account' : 'Login / Register'}
                     </Link>
                   </div>
                   {

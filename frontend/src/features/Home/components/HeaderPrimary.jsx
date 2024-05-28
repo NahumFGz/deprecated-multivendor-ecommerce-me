@@ -4,7 +4,7 @@ import { authUrls } from '../../Auth/routes/authUrls'
 import { useAuthStore } from '../../../store/useAuthStore'
 import { ProfileDropdown } from './ProfileDropdown'
 
-export function HeaderSearch () {
+export function HeaderPrimary () {
   const profile = useAuthStore((store) => store.profile)
   const isAuth = useAuthStore((store) => store.isAuth)
 
