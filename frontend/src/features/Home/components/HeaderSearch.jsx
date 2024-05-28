@@ -66,7 +66,9 @@ export function HeaderSearch () {
                   />
                   <span className='sr-only'>items in cart, view bag</span>
                 </a>
-                <span className='absolute top-0 right-0 inline-flex items-center justify-center w-5 h-5 text-xs font-bold leading-none text-white bg-red-600 rounded-full transform translate-x-3 -translate-y-3'>
+                <span className={`absolute top-0 right-0 inline-flex items-center justify-center w-5 h-5 text-xs font-bold leading-none text-white bg-red-600 rounded-full 
+                                  transform translate-x-3 -translate-y-2 md:-translate-y-3`}
+                >
                   0
                 </span>
               </div>
