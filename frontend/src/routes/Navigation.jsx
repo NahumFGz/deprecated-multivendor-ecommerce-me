@@ -1,19 +1,23 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { ProtectedRoutes } from './ProtectedRoutes'
+
+import { homeUrls } from '../features/Home/routes/homeUrls'
+import { authBasePath, authUrls } from '../features/Auth/routes/authUrls'
+
 import { HomeLayout } from '../features/Home/layouts/HomeLayout'
-import { AuthLayout } from '../features/Auth/layouts/AuthLayout'
-import { AccountLayout } from '../features/Account/layouts/AccountLayout'
 import { HomePage } from '../features/Home/pages/HomePage'
+
+import { AuthLayout } from '../features/Auth/layouts/AuthLayout'
 import { LoginPage } from '../features/Auth/pages/LoginPage'
 import { RegisterPage } from '../features/Auth/pages/RegisterPage'
 import { PasswordResetPage } from '../features/Auth/pages/PasswordResetPage'
+
+import { AccountLayout } from '../features/Account/layouts/AccountLayout'
 import { DashboardPage } from '../features/Account/pages/DashboardPage'
 import { DirectionsPage } from '../features/Account/pages/DirectionsPage'
 import { ProfilePage } from '../features/Account/pages/ProfilePage'
 import { SellingHistoryPage } from '../features/Account/pages/SellingHistoryPage'
 import { ShoppingHistoryPage } from '../features/Account/pages/ShoppingHistoryPage'
-import { homeUrls } from '../features/Home/routes/homeUrls'
-import { authBasePath, authUrls } from '../features/Auth/routes/authUrls'
 import { accountBasePath, accountUrls } from '../features/Account/routes/accountUrls'
 
 export function Navigation () {
