@@ -54,7 +54,9 @@ export function HeaderSearch () {
                     </Link>
                     )
                   : (
-                    <ProfileDropdown userName={profile?.first_name} />
+                    <div className='ml-8'>
+                      <ProfileDropdown userName={profile?.first_name} />
+                    </div>
                     )
               }
               <div className='relative'>
