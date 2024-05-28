@@ -21,6 +21,8 @@ import {
   MagnifyingGlassIcon
 } from '@heroicons/react/24/outline'
 import { useAuthStore } from '../../../store/useAuthStore'
+import { Link } from 'react-router-dom'
+import { authUrls } from '../../Auth/routes/authUrls'
 
 const navigation = {
   categories: [
@@ -127,8 +129,15 @@ export function Header () {
   const [open, setOpen] = useState(false)
   const profile = useAuthStore((store) => store.profile)
   const isAuth = useAuthStore((store) => store.isAuth)
+  const cleanStore = useAuthStore((store) => store.cleanStore)
+
   console.log('profile', profile)
   console.log('isAuth', isAuth)
+  const handleLogout = () => {
+    console.log('Logging out...')
+    cleanStore()
+    setOpen(false)
+  }
 
   return (
     <div className='bg-white'>
@@ -221,17 +230,23 @@ export function Header () {
 
                 <div className='space-y-6 border-t border-gray-200 px-4 py-6'>
                   <div className='flow-root'>
-                    <a href='#' className='-m-2 block p-2 font-medium text-gray-900'>
-                      {isAuth ? 'Ver Perfil' : 'Create an account'}
-                    </a>
+                    <Link
+                      to={authUrls.login}
+                      className='-m-2 block p-2 font-medium text-gray-900'
+                    >
+                      {isAuth ? 'Ver Perfil' : 'Login / Register'}
+                    </Link>
                   </div>
                   {
                     isAuth
                       ? (
                         <div className='flow-root'>
-                          <a href='#' className='-m-2 block p-2 font-medium text-gray-900'>
+                          <p
+                            onClick={handleLogout}
+                            className='-m-2 block p-2 font-medium text-gray-900 hover:cursor-pointer'
+                          >
                             Sign out
-                          </a>
+                          </p>
                         </div>
                         )
                       : null
