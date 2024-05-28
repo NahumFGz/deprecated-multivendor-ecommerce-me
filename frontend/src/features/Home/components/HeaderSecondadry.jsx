@@ -23,6 +23,7 @@ import {
 import { useAuthStore } from '../../../store/useAuthStore'
 import { Link } from 'react-router-dom'
 import { authUrls } from '../../Auth/routes/authUrls'
+import { homeUrls } from '../routes/homeUrls'
 
 const navigation = {
   categories: [
@@ -31,25 +32,25 @@ const navigation = {
       featured: [
         {
           name: 'New Arrivals',
-          href: '#',
+          to: homeUrls.yugioh,
           imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg',
           imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.'
         },
         {
           name: 'Basic Tees',
-          href: '#',
+          to: homeUrls.yugioh,
           imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
           imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.'
         },
         {
           name: 'Accessories',
-          href: '#',
+          to: homeUrls.yugioh,
           imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-03.jpg',
           imageAlt: 'Model wearing minimalist watch with black wristband and white watch face.'
         },
         {
           name: 'Carry',
-          href: '#',
+          to: homeUrls.yugioh,
           imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-04.jpg',
           imageAlt: 'Model opening tan leather long wallet with credit card pockets and cash pouch.'
         }
@@ -60,26 +61,26 @@ const navigation = {
       featured: [
         {
           name: 'New Arrivals',
-          href: '#',
+          to: homeUrls.pokemon,
           imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
           imageAlt: 'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.'
         },
         {
           name: 'Basic Tees',
-          href: '#',
+          to: homeUrls.pokemon,
           imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-02.jpg',
           imageAlt: 'Model wearing light heather gray t-shirt.'
         },
         {
           name: 'Accessories',
-          href: '#',
+          to: homeUrls.pokemon,
           imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-03.jpg',
           imageAlt:
             'Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.'
         },
         {
           name: 'Carry',
-          href: '#',
+          to: homeUrls.pokemon,
           imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-04.jpg',
           imageAlt: 'Model putting folded cash into slim card holder olive leather wallet with hand stitching.'
         }
@@ -90,26 +91,26 @@ const navigation = {
       featured: [
         {
           name: 'Basic Tees',
-          href: '#',
+          to: homeUrls.boardGames,
           imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-02.jpg',
           imageAlt: 'Model wearing light heather gray t-shirt.'
         },
         {
           name: 'Accessories',
-          href: '#',
+          to: homeUrls.boardGames,
           imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-03.jpg',
           imageAlt:
             'Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.'
         },
         {
           name: 'Carry',
-          href: '#',
+          to: homeUrls.boardGames,
           imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-04.jpg',
           imageAlt: 'Model putting folded cash into slim card holder olive leather wallet with hand stitching.'
         },
         {
           name: 'New Arrivals',
-          href: '#',
+          to: homeUrls.boardGames,
           imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
           imageAlt: 'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.'
         }
@@ -117,7 +118,7 @@ const navigation = {
     }
   ],
   pages: [
-    { name: 'Marketplace', href: '#' }
+    { name: 'Marketplace', to: homeUrls.marketplace }
   ]
 }
 
@@ -133,6 +134,7 @@ export function HeaderSecondadry () {
 
   console.log('profile', profile)
   console.log('isAuth', isAuth)
+
   const handleLogout = () => {
     console.log('Logging out...')
     cleanStore()
@@ -203,10 +205,10 @@ export function HeaderSecondadry () {
                               <div className='aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75'>
                                 <img src={item.imageSrc} alt={item.imageAlt} className='object-cover object-center' />
                               </div>
-                              <a href={item.href} className='mt-6 block text-sm font-medium text-gray-900'>
+                              <Link to={item.to} className='mt-6 block text-sm font-medium text-gray-900'>
                                 <span className='absolute inset-0 z-10' aria-hidden='true' />
                                 {item.name}
-                              </a>
+                              </Link>
                               <p aria-hidden='true' className='mt-1 text-sm text-gray-500'>
                                 Shop now
                               </p>
@@ -221,9 +223,9 @@ export function HeaderSecondadry () {
                 <div className='space-y-6 border-t border-gray-200 px-4 py-6'>
                   {navigation.pages.map((page) => (
                     <div key={page.name} className='flow-root'>
-                      <a href={page.href} className='-m-2 block p-2 font-medium text-gray-900'>
+                      <Link to={page.to} className='-m-2 block p-2 font-medium text-gray-900'>
                         {page.name}
-                      </a>
+                      </Link>
                     </div>
                   ))}
                 </div>
@@ -271,7 +273,7 @@ export function HeaderSecondadry () {
                       <div className='flex h-full justify-center space-x-8'>
                         {navigation.categories.map((category) => (
                           <Popover key={category.name} className='flex'>
-                            {({ open }) => (
+                            {({ open, close }) => (
                               <>
                                 <div className='relative flex'>
                                   <PopoverButton
@@ -309,12 +311,15 @@ export function HeaderSecondadry () {
                                                   className='object-cover object-center'
                                                 />
                                               </div>
-                                              <a href={item.href} className='mt-4 block font-medium text-gray-900'>
+                                              <Link
+                                                onClick={() => close()}
+                                                to={item.to} className='mt-4 block font-medium text-gray-900'
+                                              >
                                                 <span className='absolute inset-0 z-10' aria-hidden='true' />
                                                 {item.name}
-                                              </a>
+                                              </Link>
                                               <p aria-hidden='true' className='mt-1'>
-                                                Shop now
+                                                Shop now -&gt;
                                               </p>
                                             </div>
                                           ))}
@@ -329,13 +334,13 @@ export function HeaderSecondadry () {
                         ))}
 
                         {navigation.pages.map((page) => (
-                          <a
+                          <Link
                             key={page.name}
-                            href={page.href}
-                            className='flex items-center text-sm font-medium text-gray-700 hover:text-gray-800'
+                            to={page.to}
+                            className='flex items-center text-sm font-medium text-gray-700 hover:text-gray-800 hover:cursor-pointer'
                           >
                             {page.name}
-                          </a>
+                          </Link>
                         ))}
                       </div>
                     </PopoverGroup>
