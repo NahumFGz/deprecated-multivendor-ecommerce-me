@@ -4,26 +4,13 @@ import {
   Bars3Icon,
   CalendarIcon,
   ChartPieIcon,
-  DocumentDuplicateIcon,
   FolderIcon,
   HomeIcon,
   UsersIcon,
   XMarkIcon
 } from '@heroicons/react/24/outline'
-
-const navigation = [
-  { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-  { name: 'Team', href: '#', icon: UsersIcon, current: false },
-  { name: 'Projects', href: '#', icon: FolderIcon, current: false },
-  { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-  { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
-  { name: 'Reports', href: '#', icon: ChartPieIcon, current: false }
-]
-const teams = [
-  { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
-  { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
-  { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false }
-]
+import { Link, useLocation } from 'react-router-dom'
+import { accountUrls } from '../routes/accountUrls'
 
 function classNames (...classes) {
   return classes.filter(Boolean).join(' ')
@@ -31,6 +18,20 @@ function classNames (...classes) {
 
 export function AccountLayout ({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const location = useLocation()
+
+  const navigation = [
+    { name: 'Dashboard', to: accountUrls.dashboard, icon: HomeIcon, current: location.pathname === accountUrls.dashboard },
+    { name: 'Profile', to: accountUrls.profile, icon: UsersIcon, current: location.pathname === accountUrls.profile },
+    { name: 'Directions', to: accountUrls.directions, icon: FolderIcon, current: location.pathname === accountUrls.directions },
+    { name: 'Ventas', to: accountUrls.selling, icon: CalendarIcon, current: location.pathname === accountUrls.selling },
+    { name: 'Compras', to: accountUrls.shopping, icon: ChartPieIcon, current: location.pathname === accountUrls.shopping }
+  ]
+  const teams = [
+    { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
+    { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
+    { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false }
+  ]
 
   return (
     <>
@@ -88,8 +89,8 @@ export function AccountLayout ({ children }) {
                           <ul role='list' className='-mx-2 space-y-1'>
                             {navigation.map((item) => (
                               <li key={item.name}>
-                                <a
-                                  href={item.href}
+                                <Link
+                                  to={item.to}
                                   className={classNames(
                                     item.current
                                       ? 'bg-gray-800 text-white'
@@ -99,7 +100,7 @@ export function AccountLayout ({ children }) {
                                 >
                                   <item.icon className='h-6 w-6 shrink-0' aria-hidden='true' />
                                   {item.name}
-                                </a>
+                                </Link>
                               </li>
                             ))}
                           </ul>
@@ -153,8 +154,8 @@ export function AccountLayout ({ children }) {
                   <ul role='list' className='-mx-2 space-y-1'>
                     {navigation.map((item) => (
                       <li key={item.name}>
-                        <a
-                          href={item.href}
+                        <Link
+                          to={item.to}
                           className={classNames(
                             item.current
                               ? 'bg-gray-800 text-white'
@@ -164,7 +165,7 @@ export function AccountLayout ({ children }) {
                         >
                           <item.icon className='h-6 w-6 shrink-0' aria-hidden='true' />
                           {item.name}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
