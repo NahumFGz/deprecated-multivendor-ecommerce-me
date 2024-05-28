@@ -24,6 +24,7 @@ import { useAuthStore } from '../../../store/useAuthStore'
 import { Link } from 'react-router-dom'
 import { authUrls } from '../../Auth/routes/authUrls'
 import { homeUrls } from '../routes/homeUrls'
+import { accountUrls } from '../../Account/routes/accountUrls'
 
 const navigation = {
   categories: [
@@ -205,7 +206,11 @@ export function HeaderSecondadry () {
                               <div className='aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75'>
                                 <img src={item.imageSrc} alt={item.imageAlt} className='object-cover object-center' />
                               </div>
-                              <Link to={item.to} className='mt-6 block text-sm font-medium text-gray-900'>
+                              <Link
+                                to={item.to}
+                                className='mt-6 block text-sm font-medium text-gray-900'
+                                onClick={() => setOpen(false)}
+                              >
                                 <span className='absolute inset-0 z-10' aria-hidden='true' />
                                 {item.name}
                               </Link>
@@ -223,7 +228,11 @@ export function HeaderSecondadry () {
                 <div className='space-y-6 border-t border-gray-200 px-4 py-6'>
                   {navigation.pages.map((page) => (
                     <div key={page.name} className='flow-root'>
-                      <Link to={page.to} className='-m-2 block p-2 font-medium text-gray-900'>
+                      <Link
+                        to={page.to}
+                        className='-m-2 block p-2 font-medium text-gray-900'
+                        onClick={() => setOpen(false)}
+                      >
                         {page.name}
                       </Link>
                     </div>
@@ -233,7 +242,7 @@ export function HeaderSecondadry () {
                 <div className='space-y-6 border-t border-gray-200 px-4 py-6'>
                   <div className='flow-root'>
                     <Link
-                      to={authUrls.login}
+                      to={isAuth ? accountUrls.dashboard : authUrls.login}
                       className='-m-2 block p-2 font-medium text-gray-900'
                     >
                       {isAuth ? 'View account' : 'Login / Register'}
