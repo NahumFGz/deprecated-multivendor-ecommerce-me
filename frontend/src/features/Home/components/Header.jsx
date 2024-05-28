@@ -354,7 +354,7 @@ export function Header () {
                         <input
                           type='text'
                           placeholder='Search products'
-                          className='md:py-1 lg:py-2 xl:py-2.5 w-full pl-10 pr-4 py-1 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500'
+                          className='md:py-1 lg:py-2 xl:py-2.5 w-full pl-10 pr-4 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-500 placeholder-gray-300'
                         />
                       </div>
                     </div>
