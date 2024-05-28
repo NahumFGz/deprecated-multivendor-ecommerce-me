@@ -29,7 +29,7 @@ function classNames (...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export function AccountLayout () {
+export function AccountLayout ({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
@@ -228,7 +228,11 @@ export function AccountLayout () {
         </div>
 
         <main className='py-10 lg:pl-72'>
-          <div className='px-4 sm:px-6 lg:px-8'>{/* Your content */}</div>
+          <div className='px-4 sm:px-6 lg:px-8'>
+            {
+              children
+            }
+          </div>
         </main>
       </div>
     </>

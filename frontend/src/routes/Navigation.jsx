@@ -1,20 +1,40 @@
-import React from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { ProtectedRoutes } from './ProtectedRoutes'
-import { Dashboard } from '../components/Dashboard'
-import { HomeRoutes } from '../features/Home/routes/HomeRoutes'
-import { AuthRoutes } from '../features/Auth/routes/AuthRoutes'
+import { HomeLayout } from '../features/Home/layouts/HomeLayout'
+import { AuthLayout } from '../features/Auth/layouts/AuthLayout'
+import { AccountLayout } from '../features/Account/layouts/AccountLayout'
+import { HomePage } from '../features/Home/pages/HomePage'
+import { LoginPage } from '../features/Auth/pages/LoginPage'
+import { RegisterPage } from '../features/Auth/pages/RegisterPage'
+import { PasswordResetPage } from '../features/Auth/pages/PasswordResetPage'
+import { DashboardPage } from '../features/Account/pages/DashboardPage'
+import { DirectionsPage } from '../features/Account/pages/DirectionsPage'
+import { ProfilePage } from '../features/Account/pages/ProfilePage'
+import { SellingHistoryPage } from '../features/Account/pages/SellingHistoryPage'
+import { ShoppingHistoryPage } from '../features/Account/pages/ShoppingHistoryPage'
+import { homeUrls } from '../features/Home/routes/homeUrls'
+import { authBasePath, authUrls } from '../features/Auth/routes/authUrls'
+import { accountBasePath, accountUrls } from '../features/Account/routes/accountUrls'
 
 export function Navigation () {
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Navigate to='/home' />} />
-        <Route path='/home/*' element={<HomeRoutes />} />
-        <Route path='/auth/*' element={<AuthRoutes />} />
+        <Route path={homeUrls.home} element={<HomeLayout><HomePage /></HomeLayout>} />
+
+        <Route path={authBasePath} element={<Navigate to={authUrls.login} />} />
+        <Route path={authUrls.login} element={<AuthLayout><LoginPage /></AuthLayout>} />
+        <Route path={authUrls.register} element={<AuthLayout><RegisterPage /></AuthLayout>} />
+        <Route path={authUrls.passwordReset} element={<AuthLayout><PasswordResetPage /></AuthLayout>} />
 
         <Route element={<ProtectedRoutes />}>
-          <Route path='/dashboard' element={<Dashboard />} />
+          <Route path={accountBasePath} element={<Navigate to={accountUrls.dashboard} />} />
+          <Route path={accountUrls.dashboard} element={<AccountLayout><DashboardPage /></AccountLayout>} />
+          <Route path={accountUrls.directions} element={<AccountLayout><DirectionsPage /></AccountLayout>} />
+          <Route path={accountUrls.profile} element={<AccountLayout><ProfilePage /></AccountLayout>} />
+          <Route path={accountUrls.selling} element={<AccountLayout><SellingHistoryPage /></AccountLayout>} />
+          <Route path={accountUrls.shopping} element={<AccountLayout><ShoppingHistoryPage /></AccountLayout>} />
         </Route>
       </Routes>
     </BrowserRouter>
