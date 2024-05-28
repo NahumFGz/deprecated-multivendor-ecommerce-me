@@ -11,6 +11,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { Link, useLocation } from 'react-router-dom'
 import { accountUrls } from '../routes/accountUrls'
+import { homeUrls } from '../../Home/routes/homeUrls'
 
 function classNames (...classes) {
   return classes.filter(Boolean).join(' ')
@@ -28,8 +29,8 @@ export function AccountLayout ({ children }) {
     { name: 'Compras', to: accountUrls.shopping, icon: ChartPieIcon, current: location.pathname === accountUrls.shopping }
   ]
   const links = [
-    { id: 1, name: 'Go Home', href: '#', initial: 'H', current: false },
-    { id: 2, name: 'Go Marketplace', href: '#', initial: 'M', current: false }
+    { id: 1, name: 'Go Home', to: homeUrls.home, initial: 'H', current: false },
+    { id: 2, name: 'Go Marketplace', to: homeUrls.marketplace, initial: 'M', current: false }
   ]
 
   return (
@@ -109,8 +110,8 @@ export function AccountLayout ({ children }) {
                           <ul role='list' className='-mx-2 mt-2 space-y-1'>
                             {links.map((team) => (
                               <li key={team.name}>
-                                <a
-                                  href={team.href}
+                                <Link
+                                  to={team.to}
                                   className={classNames(
                                     team.current
                                       ? 'bg-gray-800 text-white'
@@ -122,7 +123,7 @@ export function AccountLayout ({ children }) {
                                     {team.initial}
                                   </span>
                                   <span className='truncate'>{team.name}</span>
-                                </a>
+                                </Link>
                               </li>
                             ))}
                           </ul>
@@ -174,8 +175,8 @@ export function AccountLayout ({ children }) {
                   <ul role='list' className='-mx-2 mt-2 space-y-1'>
                     {links.map((team) => (
                       <li key={team.name}>
-                        <a
-                          href={team.href}
+                        <Link
+                          to={team.to}
                           className={classNames(
                             team.current
                               ? 'bg-gray-800 text-white'
@@ -187,7 +188,7 @@ export function AccountLayout ({ children }) {
                             {team.initial}
                           </span>
                           <span className='truncate'>{team.name}</span>
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
