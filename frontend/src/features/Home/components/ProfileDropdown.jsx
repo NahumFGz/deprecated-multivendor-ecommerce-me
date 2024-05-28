@@ -1,16 +1,19 @@
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { useAuthStore } from '../../../store/useAuthStore'
 
 function classNames (...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const userNavigation = [
-  { name: 'Your profile', href: '#' },
-  { name: 'Sign out', href: '#' }
-]
-
 export function ProfileDropdown ({ userName }) {
+  const cleanStore = useAuthStore((store) => store.cleanStore)
+
+  const handleLogout = () => {
+    console.log('Logging out...')
+    cleanStore()
+  }
+
   return (
     <>
       {/* Profile dropdown */}
@@ -38,21 +41,32 @@ export function ProfileDropdown ({ userName }) {
           leaveTo='transform opacity-0 scale-95'
         >
           <MenuItems className='absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none'>
-            {userNavigation.map((item) => (
-              <MenuItem key={item.name}>
-                {({ focus }) => (
-                  <a
-                    href={item.href}
-                    className={classNames(
-                      focus ? 'bg-gray-50' : '',
-                      'block px-3 py-1 text-sm leading-6 text-gray-900'
-                    )}
-                  >
-                    {item.name}
-                  </a>
-                )}
-              </MenuItem>
-            ))}
+            <MenuItem>
+              {({ active }) => (
+                <a
+                  href='#'
+                  className={classNames(
+                    active ? 'bg-gray-50' : '',
+                    'block px-3 py-1 text-sm leading-6 text-gray-900'
+                  )}
+                >
+                  Your profile
+                </a>
+              )}
+            </MenuItem>
+            <MenuItem>
+              {({ active }) => (
+                <button
+                  onClick={handleLogout}
+                  className={classNames(
+                    active ? 'bg-gray-50' : '',
+                    'block px-3 py-1 text-sm leading-6 text-gray-900'
+                  )}
+                >
+                  Sign out
+                </button>
+              )}
+            </MenuItem>
           </MenuItems>
         </Transition>
       </Menu>

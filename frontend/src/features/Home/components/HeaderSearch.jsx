@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ChevronDownIcon, MagnifyingGlassIcon, ShoppingCartIcon, UserIcon } from '@heroicons/react/24/outline'
+import { MagnifyingGlassIcon, ShoppingCartIcon, UserIcon } from '@heroicons/react/24/outline'
 import { authUrls } from '../../Auth/routes/authUrls'
 import { useAuthStore } from '../../../store/useAuthStore'
 import { ProfileDropdown } from './ProfileDropdown'
@@ -49,7 +49,6 @@ export function HeaderSearch () {
                       <div className='flex gap-2'>
                         <UserIcon className='h-5 w-5 inline-block' aria-hidden='true' />
                         <p>Login/Register</p>
-                        <ChevronDownIcon className='h-5 w-5 inline-block' aria-hidden='true' />
                       </div>
                     </Link>
                     )
