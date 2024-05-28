@@ -1,6 +1,13 @@
-import { MagnifyingGlassIcon, ShoppingCartIcon, UserIcon } from '@heroicons/react/24/outline'
+import { Link } from 'react-router-dom'
+import { ChevronDownIcon, MagnifyingGlassIcon, ShoppingCartIcon, UserIcon } from '@heroicons/react/24/outline'
+import { authUrls } from '../../Auth/routes/authUrls'
+import { useAuthStore } from '../../../store/useAuthStore'
+import { ProfileDropdown } from './ProfileDropdown'
 
 export function HeaderSearch () {
+  const profile = useAuthStore((store) => store.profile)
+  const isAuth = useAuthStore((store) => store.isAuth)
+
   return (
     <div className='bg-white'>
       <header className='relative bg-gray-900'>
@@ -32,9 +39,24 @@ export function HeaderSearch () {
 
             {/* User and Login */}
             <div className='flex items-center space-x-6'>
-              <a href='#' className='text-sm font-medium text-white hover:text-gray-100'>
-                <UserIcon className='h-5 w-5 inline-block' aria-hidden='true' /> Login
-              </a>
+              {
+                !isAuth
+                  ? (
+                    <Link
+                      to={authUrls.login}
+                      className='text-sm font-medium text-white hover:text-gray-100'
+                    >
+                      <div className='flex gap-2'>
+                        <UserIcon className='h-5 w-5 inline-block' aria-hidden='true' />
+                        <p>Login/Register</p>
+                        <ChevronDownIcon className='h-5 w-5 inline-block' aria-hidden='true' />
+                      </div>
+                    </Link>
+                    )
+                  : (
+                    <ProfileDropdown userName={profile?.first_name} />
+                    )
+              }
               <div className='relative'>
                 <a href='#' className='group -m-2 flex items-center p-2'>
                   <ShoppingCartIcon
