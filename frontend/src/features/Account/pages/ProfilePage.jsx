@@ -160,9 +160,12 @@ export function ProfilePage () {
                   id='document-number'
                   autoComplete='document-number'
                   defaultValue={profile?.document_number || ''}
+                  pattern='[0-9]*'
+                  inputMode='numeric'
                   className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors['document-number'] ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
               </div>
+
             </div>
 
             <div className='sm:col-span-3'>
@@ -210,7 +213,7 @@ export function ProfilePage () {
                   name='country-code'
                   id='country-code'
                   placeholder='+1'
-                  defaultValue={profile?.phone_number ? profile.phone_number.slice(0, 3) : ''}
+                  defaultValue={profile?.phone_number || '+51'}
                   className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors['phone-number'] ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
                 <input
@@ -218,7 +221,7 @@ export function ProfilePage () {
                   name='phone-number'
                   id='phone-number'
                   autoComplete='tel'
-                  defaultValue={profile?.phone_number ? profile.phone_number.slice(3) : ''}
+                  defaultValue={profile?.phone_number || ''}
                   className={`col-span-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors['phone-number'] ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
               </div>
