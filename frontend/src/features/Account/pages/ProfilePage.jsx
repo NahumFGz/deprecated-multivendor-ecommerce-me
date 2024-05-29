@@ -57,6 +57,29 @@ export function ProfilePage () {
     }
   }
 
+  const handleDocumentNumberChange = (event) => {
+    const { name, value } = event.target
+    const documentType = formValues.document_type
+
+    let regex
+    if (documentType === 'DNI') {
+      regex = /^\d{0,8}$/
+    } else if (documentType === 'CE') {
+      regex = /^\d{0,9}$/
+    } else if (documentType === 'PA') {
+      regex = /^[a-zA-Z0-9]{0,8}$/
+    } else {
+      regex = /.*/ // default to allow any value
+    }
+
+    if (regex.test(value)) {
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        [name]: value
+      }))
+    }
+  }
+
   const validate = (fields) => {
     const newErrors = {}
     if (!fields.first_name) newErrors.first_name = true
@@ -207,9 +230,7 @@ export function ProfilePage () {
                   id='document_number'
                   autoComplete='document-number'
                   value={formValues.document_number}
-                  onChange={handleChange}
-                  pattern='[0-9]*'
-                  inputMode='numeric'
+                  onChange={handleDocumentNumberChange}
                   className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors.document_number ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
               </div>
