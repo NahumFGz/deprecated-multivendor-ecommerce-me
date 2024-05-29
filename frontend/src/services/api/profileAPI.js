@@ -16,10 +16,10 @@ export async function getProfileApi (accessToken) {
   }
 }
 
-export async function patchProfileApi (accessToken, profile) {
+export async function patchProfileApi (accessToken, id, profile) {
   try {
     const axiosInstance = createAxiosAuthInstance(accessToken)
-    const response = await axiosInstance.patch('/api/profile/', profile)
+    const response = await axiosInstance.patch(`/api/profile/${id}/`, profile)
     const { data, status } = response
 
     if (status === 200) {

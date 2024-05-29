@@ -3,6 +3,7 @@ import { getProfileApi, patchProfileApi } from '../../../services/api/profileAPI
 
 export function useProfileAPI () {
   const token = useAuthStore((state) => state.token)
+  const profileStore = useAuthStore((state) => state.profile)
 
   const getProfile = async () => {
     try {
@@ -15,7 +16,7 @@ export function useProfileAPI () {
 
   const patchProfile = async (profile) => {
     try {
-      const response = await patchProfileApi(token?.access, profile)
+      const response = await patchProfileApi(token?.access, profileStore.id, profile)
       return response
     } catch (error) {
       throw new Error('Error updating profile')

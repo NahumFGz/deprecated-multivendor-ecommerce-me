@@ -5,7 +5,7 @@ import { useProfileAPI } from '../hooks/useProfileAPI'
 export function ProfilePage () {
   const [profile, setProfile] = useState(null)
   const [errors, setErrors] = useState({}) // Estado para almacenar errores
-  const { getProfile } = useProfileAPI()
+  const { getProfile, patchProfile } = useProfileAPI()
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -36,15 +36,26 @@ export function ProfilePage () {
     return newErrors
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     const fields = Object.fromEntries(new FormData(event.target))
     const newErrors = validate(fields)
     setErrors(newErrors)
 
     if (Object.keys(newErrors).length === 0) {
-      console.log(fields)
-      console.log('--->', fields.email)
+      const profileForm = {
+        first_name: fields['first-name'],
+        last_name: fields['last-name'],
+        document_type: fields['document-type'],
+        document_number: fields['document-number'],
+        gender: fields.gender,
+        birth_date: fields['birth-date'],
+        phone_country_code: fields['country-code'],
+        phone_number: fields['phone-number']
+      }
+      console.log('sender:', profileForm)
+      const response = await patchProfile(profileForm)
+      console.log('response: ', response)
     }
   }
 
