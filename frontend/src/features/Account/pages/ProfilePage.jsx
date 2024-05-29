@@ -4,6 +4,7 @@ import { useProfileAPI } from '../hooks/useProfileAPI'
 
 export function ProfilePage () {
   const [profile, setProfile] = useState(null)
+  const [errors, setErrors] = useState({}) // Estado para almacenar errores
   const { getProfile } = useProfileAPI()
 
   useEffect(() => {
@@ -23,11 +24,28 @@ export function ProfilePage () {
     console.log(profile)
   }, [profile])
 
+  const validate = (fields) => {
+    const newErrors = {}
+    if (!fields['first-name']) newErrors['first-name'] = true
+    if (!fields['last-name']) newErrors['last-name'] = true
+    if (!fields['document-type']) newErrors['document-type'] = true
+    if (!fields['document-number']) newErrors['document-number'] = true
+    if (!fields.gender) newErrors.gender = true
+    if (!fields['birth-date']) newErrors['birth-date'] = true
+    if (!fields['phone-number']) newErrors['phone-number'] = true
+    return newErrors
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault()
     const fields = Object.fromEntries(new FormData(event.target))
-    console.log(fields)
-    console.log('--->', fields.email)
+    const newErrors = validate(fields)
+    setErrors(newErrors)
+
+    if (Object.keys(newErrors).length === 0) {
+      console.log(fields)
+      console.log('--->', fields.email)
+    }
   }
 
   return (
@@ -90,7 +108,7 @@ export function ProfilePage () {
                   id='first-name'
                   autoComplete='given-name'
                   defaultValue={profile?.first_name || ''}
-                  className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors['first-name'] ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
               </div>
             </div>
@@ -106,7 +124,7 @@ export function ProfilePage () {
                   id='last-name'
                   autoComplete='family-name'
                   defaultValue={profile?.last_name || ''}
-                  className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors['last-name'] ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
               </div>
             </div>
@@ -121,7 +139,7 @@ export function ProfilePage () {
                   name='document-type'
                   autoComplete='document-type'
                   defaultValue={profile?.document_type || ''}
-                  className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
+                  className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors['document-type'] ? 'ring-red-500' : 'ring-gray-300'} focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6`}
                 >
                   <option value=''>Select</option>
                   <option value='PA'>Pasaporte</option>
@@ -142,7 +160,7 @@ export function ProfilePage () {
                   id='document-number'
                   autoComplete='document-number'
                   defaultValue={profile?.document_number || ''}
-                  className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors['document-number'] ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
               </div>
             </div>
@@ -157,7 +175,7 @@ export function ProfilePage () {
                   name='gender'
                   autoComplete='gender'
                   defaultValue={profile?.gender || ''}
-                  className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
+                  className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors.gender ? 'ring-red-500' : 'ring-gray-300'} focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6`}
                 >
                   <option value='M'>Male</option>
                   <option value='F'>Female</option>
@@ -177,7 +195,7 @@ export function ProfilePage () {
                   id='birth-date'
                   autoComplete='bday'
                   defaultValue={profile?.birth_date || ''}
-                  className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors['birth-date'] ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
               </div>
             </div>
@@ -193,7 +211,7 @@ export function ProfilePage () {
                   id='country-code'
                   placeholder='+1'
                   defaultValue={profile?.phone_number ? profile.phone_number.slice(0, 3) : ''}
-                  className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors['phone-number'] ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
                 <input
                   type='tel'
@@ -201,19 +219,14 @@ export function ProfilePage () {
                   id='phone-number'
                   autoComplete='tel'
                   defaultValue={profile?.phone_number ? profile.phone_number.slice(3) : ''}
-                  className='col-span-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  className={`col-span-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors['phone-number'] ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
               </div>
             </div>
-
           </div>
         </div>
-
       </div>
       <div className='mt-6 flex items-center justify-end gap-x-6'>
-        <button type='button' className='text-sm font-semibold leading-6 text-gray-900'>
-          Cancel
-        </button>
         <button
           type='submit'
           className='rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
