@@ -1,6 +1,7 @@
 import { UserCircleIcon } from '@heroicons/react/24/solid'
 import { useEffect, useState } from 'react'
 import { useProfileAPI } from '../hooks/useProfileAPI'
+import { toast } from 'react-toastify'
 
 export function ProfilePage () {
   const [profile, setProfile] = useState(null)
@@ -82,12 +83,17 @@ export function ProfilePage () {
 
   const validate = (fields) => {
     const newErrors = {}
+    const today = new Date().toISOString().split('T')[0] // Get today's date in YYYY-MM-DD format
     if (!fields.first_name) newErrors.first_name = true
     if (!fields.last_name) newErrors.last_name = true
     if (!fields.document_type) newErrors.document_type = true
     if (!fields.document_number) newErrors.document_number = true
     if (!fields.gender) newErrors.gender = true
-    if (!fields.birth_date) newErrors.birth_date = true
+    if (!fields.birth_date) {
+      newErrors.birth_date = true
+    } else if (fields.birth_date > today) {
+      newErrors.birth_date = 'Date cannot be in the future'
+    }
     if (!fields.phone_number) newErrors.phone_number = true
     return newErrors
   }
@@ -109,11 +115,17 @@ export function ProfilePage () {
         phone_country_code: fields.phone_country_code,
         phone_number: fields.phone_number
       }
-      console.log('sender:', profileForm)
-      const response = await patchProfile(profileForm)
-      console.log('response: ', response)
+
+      try {
+        await patchProfile(profileForm)
+        toast.success('Profile updated')
+      } catch (error) {
+        toast.error('Failed to update profile')
+      }
     }
   }
+
+  const today = new Date().toISOString().split('T')[0]
 
   return (
     <form onSubmit={handleSubmit}>
@@ -212,8 +224,8 @@ export function ProfilePage () {
                   className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors.document_type ? 'ring-red-500' : 'ring-gray-300'} focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6`}
                 >
                   <option value=''>Select</option>
-                  <option value='PA'>Pasaporte</option>
                   <option value='DNI'>Documento nacional de identidad</option>
+                  <option value='PA'>Pasaporte</option>
                   <option value='CE'>Carnet de extranjería</option>
                 </select>
               </div>
@@ -268,6 +280,7 @@ export function ProfilePage () {
                   autoComplete='bday'
                   value={formValues.birth_date}
                   onChange={handleChange}
+                  max={today}
                   className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors.birth_date ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
               </div>
