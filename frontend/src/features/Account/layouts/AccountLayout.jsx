@@ -6,6 +6,7 @@ import {
   ChartPieIcon,
   FolderIcon,
   HomeIcon,
+  LockClosedIcon,
   UsersIcon,
   XMarkIcon
 } from '@heroicons/react/24/outline'
@@ -24,6 +25,7 @@ export function AccountLayout ({ children }) {
   const navigation = [
     { name: 'Dashboard', to: accountUrls.dashboard, icon: HomeIcon, current: location.pathname === accountUrls.dashboard },
     { name: 'Profile', to: accountUrls.profile, icon: UsersIcon, current: location.pathname === accountUrls.profile },
+    { name: 'Security', to: accountUrls.profile, icon: LockClosedIcon, current: location.pathname === accountUrls.security },
     { name: 'Directions', to: accountUrls.directions, icon: FolderIcon, current: location.pathname === accountUrls.directions },
     { name: 'Ventas', to: accountUrls.selling, icon: CalendarIcon, current: location.pathname === accountUrls.selling },
     { name: 'Compras', to: accountUrls.shopping, icon: ChartPieIcon, current: location.pathname === accountUrls.shopping }

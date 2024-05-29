@@ -23,6 +23,7 @@ import { PokemonPage } from '../features/Home/pages/PokemonPage'
 import { BoardGamesPage } from '../features/Home/pages/BoardGamesPage'
 import { MarketplacePage } from '../features/Home/pages/MarketplacePage'
 import { FiltersLayout } from '../features/Home/layouts/FiltersLayout'
+import { SecurityPage } from '../features/Account/pages/SecurityPage'
 
 export function Navigation () {
   return (
@@ -47,6 +48,7 @@ export function Navigation () {
           <Route path={accountUrls.profile} element={<AccountLayout><ProfilePage /></AccountLayout>} />
           <Route path={accountUrls.selling} element={<AccountLayout><SellingHistoryPage /></AccountLayout>} />
           <Route path={accountUrls.shopping} element={<AccountLayout><ShoppingHistoryPage /></AccountLayout>} />
+          <Route path={accountUrls.security} element={<AccountLayout><SecurityPage /></AccountLayout>} />
         </Route>
       </Routes>
     </BrowserRouter>
