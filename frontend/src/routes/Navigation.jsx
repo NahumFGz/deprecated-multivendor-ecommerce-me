@@ -22,6 +22,7 @@ import { YugiohPage } from '../features/Home/pages/YugiohPage'
 import { PokemonPage } from '../features/Home/pages/PokemonPage'
 import { BoardGamesPage } from '../features/Home/pages/BoardGamesPage'
 import { MarketplacePage } from '../features/Home/pages/MarketplacePage'
+import { FiltersLayout } from '../features/Home/layouts/FiltersLayout'
 
 export function Navigation () {
   return (
@@ -29,10 +30,10 @@ export function Navigation () {
       <Routes>
         <Route path='/' element={<Navigate to='/home' />} />
         <Route path={homeUrls.home} element={<HomeLayout><HomePage /></HomeLayout>} />
-        <Route path={homeUrls.yugioh} element={<HomeLayout><YugiohPage /></HomeLayout>} />
-        <Route path={homeUrls.pokemon} element={<HomeLayout><PokemonPage /></HomeLayout>} />
-        <Route path={homeUrls.boardGames} element={<HomeLayout><BoardGamesPage /></HomeLayout>} />
-        <Route path={homeUrls.marketplace} element={<HomeLayout><MarketplacePage /></HomeLayout>} />
+        <Route path={homeUrls.yugioh} element={<HomeLayout><FiltersLayout><YugiohPage /></FiltersLayout></HomeLayout>} />
+        <Route path={homeUrls.pokemon} element={<HomeLayout><FiltersLayout><PokemonPage /></FiltersLayout></HomeLayout>} />
+        <Route path={homeUrls.boardGames} element={<HomeLayout><FiltersLayout><BoardGamesPage /></FiltersLayout></HomeLayout>} />
+        <Route path={homeUrls.marketplace} element={<HomeLayout><FiltersLayout><MarketplacePage /></FiltersLayout></HomeLayout>} />
 
         <Route path={authBasePath} element={<Navigate to={authUrls.login} />} />
         <Route path={authUrls.login} element={<AuthLayout><LoginPage /></AuthLayout>} />
