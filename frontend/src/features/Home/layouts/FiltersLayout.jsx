@@ -54,12 +54,6 @@ function classNames (...classes) {
 export function FiltersLayout () {
   return (
     <div className='bg-white'>
-      <div className='px-4 py-16 text-center sm:px-6 lg:px-8'>
-        <h1 className='text-4xl font-bold tracking-tight text-gray-900'>Workspace</h1>
-        <p className='mx-auto mt-4 max-w-xl text-base text-gray-500'>
-          The secret to a tidy desk? Don't get rid of anything, just put it in really really nice looking containers.
-        </p>
-      </div>
 
       {/* Filters */}
       <Disclosure
