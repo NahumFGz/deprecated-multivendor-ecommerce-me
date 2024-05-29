@@ -2,8 +2,10 @@ import { UserCircleIcon } from '@heroicons/react/24/solid'
 import { useEffect, useState } from 'react'
 import { useProfileAPI } from '../hooks/useProfileAPI'
 import { toast } from 'react-toastify'
+import { useAuthStore } from '../../../store/useAuthStore'
 
 export function ProfilePage () {
+  const setProfileStore = useAuthStore((store) => store.setProfile)
   const [profile, setProfile] = useState(null)
   const [errors, setErrors] = useState({})
   const [formValues, setFormValues] = useState({
@@ -117,7 +119,8 @@ export function ProfilePage () {
       }
 
       try {
-        await patchProfile(profileForm)
+        const res = await patchProfile(profileForm)
+        setProfileStore(res)
         toast.success('Profile updated')
       } catch (error) {
         toast.error('Failed to update profile')
