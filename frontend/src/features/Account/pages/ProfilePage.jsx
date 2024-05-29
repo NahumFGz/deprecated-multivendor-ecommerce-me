@@ -12,7 +12,7 @@ export function ProfilePage () {
     document_number: '',
     gender: '',
     birth_date: '',
-    phone_country_code: '',
+    phone_country_code: '+',
     phone_number: ''
   })
 
@@ -30,7 +30,7 @@ export function ProfilePage () {
           document_number: response[0].document_number || '',
           gender: response[0].gender || '',
           birth_date: response[0].birth_date || '',
-          phone_country_code: response[0].phone_country_code || '',
+          phone_country_code: response[0].phone_country_code || '+51',
           phone_number: response[0].phone_number || ''
         })
       } catch (error) {
@@ -43,10 +43,18 @@ export function ProfilePage () {
 
   const handleChange = (event) => {
     const { name, value } = event.target
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      [name]: value
-    }))
+    if (name === 'phone_country_code') {
+      // Ensure the value always starts with '+'
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        [name]: value.startsWith('+') ? value : `+${value}`
+      }))
+    } else {
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        [name]: value
+      }))
+    }
   }
 
   const validate = (fields) => {
@@ -75,7 +83,7 @@ export function ProfilePage () {
         document_number: fields.document_number,
         gender: fields.gender,
         birth_date: fields.birth_date,
-        phone_country_code: fields.country_code,
+        phone_country_code: fields.phone_country_code,
         phone_number: fields.phone_number
       }
       console.log('sender:', profileForm)
@@ -251,8 +259,9 @@ export function ProfilePage () {
               <div className='mt-2 grid grid-cols-3 gap-2'>
                 <input
                   type='tel'
-                  name='country_code'
-                  id='country_code'
+                  name='phone_country_code'
+                  id='phone_country_code'
+                  autoComplete='tel-country-code'
                   placeholder='+1'
                   value={formValues.phone_country_code}
                   onChange={handleChange}
