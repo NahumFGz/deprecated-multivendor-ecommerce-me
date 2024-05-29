@@ -3,6 +3,7 @@ import { MagnifyingGlassIcon, ShoppingCartIcon, UserIcon } from '@heroicons/reac
 import { authUrls } from '../../Auth/routes/authUrls'
 import { useAuthStore } from '../../../store/useAuthStore'
 import { ProfileDropdown } from './ProfileDropdown'
+import { homeUrls } from '../routes/homeUrls'
 
 export function HeaderPrimary () {
   const profile = useAuthStore((store) => store.profile)
@@ -15,14 +16,16 @@ export function HeaderPrimary () {
           <div className='flex items-center justify-between h-10 sm:h-12 lg:h-16 xl:h-20'>
             {/* Logo */}
             <div className='flex items-center'>
-              <a href='#'>
+              <Link
+                to={homeUrls.home}
+              >
                 <span className='sr-only'>Your Company</span>
                 <img
                   className='h-8 w-auto'
                   src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
                   alt=''
                 />
-              </a>
+              </Link>
             </div>
 
             {/* Search */}

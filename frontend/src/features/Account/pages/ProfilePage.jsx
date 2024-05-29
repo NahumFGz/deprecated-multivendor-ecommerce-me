@@ -155,7 +155,7 @@ export function ProfilePage () {
               </label>
               <div className='mt-2 grid grid-cols-3 gap-2'>
                 <input
-                  type='text'
+                  type='tel'
                   name='country-code'
                   id='country-code'
                   placeholder='+1'
