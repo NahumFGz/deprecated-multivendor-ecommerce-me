@@ -10,8 +10,8 @@ import {
   XMarkIcon
 } from '@heroicons/react/24/outline'
 import { Link, useLocation } from 'react-router-dom'
-import { accountUrls } from '../routes/accountUrls'
-import { homeUrls } from '../../Home/routes/homeUrls'
+import { accountUrls } from '../../../routes/urls/accountUrls'
+import { homeUrls } from '../../../routes/urls/homeUrls'
 
 function classNames (...classes) {
   return classes.filter(Boolean).join(' ')

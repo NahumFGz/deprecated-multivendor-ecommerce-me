@@ -2,7 +2,7 @@ import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/r
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { useAuthStore } from '../../../store/useAuthStore'
 import { Link } from 'react-router-dom'
-import { accountUrls } from '../../Account/routes/accountUrls'
+import { accountUrls } from '../../../routes/urls/accountUrls'
 
 function classNames (...classes) {
   return classes.filter(Boolean).join(' ')

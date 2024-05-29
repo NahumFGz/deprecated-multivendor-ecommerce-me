@@ -22,9 +22,9 @@ import {
 } from '@heroicons/react/24/outline'
 import { useAuthStore } from '../../../store/useAuthStore'
 import { Link } from 'react-router-dom'
-import { authUrls } from '../../Auth/routes/authUrls'
-import { homeUrls } from '../routes/homeUrls'
-import { accountUrls } from '../../Account/routes/accountUrls'
+import { authUrls } from '../../../routes/urls/authUrls'
+import { homeUrls } from '../../../routes/urls/homeUrls'
+import { accountUrls } from '../../../routes/urls/accountUrls'
 
 const navigation = {
   categories: [

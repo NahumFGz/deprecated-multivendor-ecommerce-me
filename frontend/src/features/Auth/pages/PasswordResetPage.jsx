@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom'
-import { authUrls } from '../routes/authUrls'
+import { authUrls } from '../../../routes/urls/authUrls'
 import { usePasswordResetForm } from '../hooks/usePasswordResetForm'
 import { useId } from 'react'
 

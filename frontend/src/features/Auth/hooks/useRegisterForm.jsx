@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { authUrls } from '../routes/authUrls'
+import { authUrls } from '../../../routes/urls/authUrls'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useAuthAPI } from '../hooks/useAuthAPI'

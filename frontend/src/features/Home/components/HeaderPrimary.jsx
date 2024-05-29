@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
 import { MagnifyingGlassIcon, ShoppingCartIcon, UserIcon } from '@heroicons/react/24/outline'
-import { authUrls } from '../../Auth/routes/authUrls'
+import { authUrls } from '../../../routes/urls/authUrls'
 import { useAuthStore } from '../../../store/useAuthStore'
 import { ProfileDropdown } from './ProfileDropdown'
-import { homeUrls } from '../routes/homeUrls'
+import { homeUrls } from '../../../routes/urls/homeUrls'
 
 export function HeaderPrimary () {
   const profile = useAuthStore((store) => store.profile)

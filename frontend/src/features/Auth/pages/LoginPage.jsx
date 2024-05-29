@@ -1,7 +1,7 @@
 import { useEffect, useId } from 'react'
 import { useLoginForm } from '../hooks/useLoginForm'
 import { Link } from 'react-router-dom'
-import { authUrls } from '../routes/authUrls'
+import { authUrls } from '../../../routes/urls/authUrls'
 import { ModalBase } from '../components/ModalBase'
 import { ModalForgotPasswordForm } from '../components/ModalForgotPasswordForm'
 
