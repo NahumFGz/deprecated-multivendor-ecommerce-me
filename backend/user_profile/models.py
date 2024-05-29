@@ -25,6 +25,7 @@ class Profile(models.Model):
     document_number = models.CharField(max_length=255, null=True, blank=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True, blank=True)
     birth_date = models.DateField(null=True, blank=True)
+    phone_country_code = models.CharField(max_length=10, null=True, blank=True)
     phone_number = models.CharField(max_length=255, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
