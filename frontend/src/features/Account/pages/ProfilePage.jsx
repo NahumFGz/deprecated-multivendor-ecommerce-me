@@ -4,7 +4,18 @@ import { useProfileAPI } from '../hooks/useProfileAPI'
 
 export function ProfilePage () {
   const [profile, setProfile] = useState(null)
-  const [errors, setErrors] = useState({}) // Estado para almacenar errores
+  const [errors, setErrors] = useState({})
+  const [formValues, setFormValues] = useState({
+    first_name: '',
+    last_name: '',
+    document_type: '',
+    document_number: '',
+    gender: '',
+    birth_date: '',
+    phone_country_code: '',
+    phone_number: ''
+  })
+
   const { getProfile, patchProfile } = useProfileAPI()
 
   useEffect(() => {
@@ -12,6 +23,16 @@ export function ProfilePage () {
       try {
         const response = await getProfile()
         setProfile(response[0])
+        setFormValues({
+          first_name: response[0].first_name || '',
+          last_name: response[0].last_name || '',
+          document_type: response[0].document_type || '',
+          document_number: response[0].document_number || '',
+          gender: response[0].gender || '',
+          birth_date: response[0].birth_date || '',
+          phone_country_code: response[0].phone_country_code || '',
+          phone_number: response[0].phone_number || ''
+        })
       } catch (error) {
         console.error('Error getting profile')
       }
@@ -20,19 +41,23 @@ export function ProfilePage () {
     fetchProfile()
   }, [])
 
-  useEffect(() => {
-    console.log(profile)
-  }, [profile])
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [name]: value
+    }))
+  }
 
   const validate = (fields) => {
     const newErrors = {}
-    if (!fields['first-name']) newErrors['first-name'] = true
-    if (!fields['last-name']) newErrors['last-name'] = true
-    if (!fields['document-type']) newErrors['document-type'] = true
-    if (!fields['document-number']) newErrors['document-number'] = true
+    if (!fields.first_name) newErrors.first_name = true
+    if (!fields.last_name) newErrors.last_name = true
+    if (!fields.document_type) newErrors.document_type = true
+    if (!fields.document_number) newErrors.document_number = true
     if (!fields.gender) newErrors.gender = true
-    if (!fields['birth-date']) newErrors['birth-date'] = true
-    if (!fields['phone-number']) newErrors['phone-number'] = true
+    if (!fields.birth_date) newErrors.birth_date = true
+    if (!fields.phone_number) newErrors.phone_number = true
     return newErrors
   }
 
@@ -44,14 +69,14 @@ export function ProfilePage () {
 
     if (Object.keys(newErrors).length === 0) {
       const profileForm = {
-        first_name: fields['first-name'],
-        last_name: fields['last-name'],
-        document_type: fields['document-type'],
-        document_number: fields['document-number'],
+        first_name: fields.first_name,
+        last_name: fields.last_name,
+        document_type: fields.document_type,
+        document_number: fields.document_number,
         gender: fields.gender,
-        birth_date: fields['birth-date'],
-        phone_country_code: fields['country-code'],
-        phone_number: fields['phone-number']
+        birth_date: fields.birth_date,
+        phone_country_code: fields.country_code,
+        phone_number: fields.phone_number
       }
       console.log('sender:', profileForm)
       const response = await patchProfile(profileForm)
@@ -109,48 +134,51 @@ export function ProfilePage () {
 
           <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
             <div className='sm:col-span-3'>
-              <label htmlFor='first-name' className='block text-sm font-medium leading-6 text-gray-900'>
+              <label htmlFor='first_name' className='block text-sm font-medium leading-6 text-gray-900'>
                 First name
               </label>
               <div className='mt-2'>
                 <input
                   type='text'
-                  name='first-name'
-                  id='first-name'
+                  name='first_name'
+                  id='first_name'
                   autoComplete='given-name'
-                  defaultValue={profile?.first_name || ''}
-                  className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors['first-name'] ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
+                  value={formValues.first_name}
+                  onChange={handleChange}
+                  className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors.first_name ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
               </div>
             </div>
 
             <div className='sm:col-span-3'>
-              <label htmlFor='last-name' className='block text-sm font-medium leading-6 text-gray-900'>
+              <label htmlFor='last_name' className='block text-sm font-medium leading-6 text-gray-900'>
                 Last name
               </label>
               <div className='mt-2'>
                 <input
                   type='text'
-                  name='last-name'
-                  id='last-name'
+                  name='last_name'
+                  id='last_name'
                   autoComplete='family-name'
-                  defaultValue={profile?.last_name || ''}
-                  className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors['last-name'] ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
+                  value={formValues.last_name}
+                  onChange={handleChange}
+                  className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors.last_name ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
               </div>
             </div>
 
             <div className='sm:col-span-3'>
-              <label htmlFor='document-type' className='block text-sm font-medium leading-6 text-gray-900'>
+              <label htmlFor='document_type' className='block text-sm font-medium leading-6 text-gray-900'>
                 Document Type
               </label>
               <div className='mt-2'>
                 <select
-                  id='document-type'
-                  name='document-type'
+                  id='document_type'
+                  name='document_type'
                   autoComplete='document-type'
-                  defaultValue={profile?.document_type || ''}
-                  className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors['document-type'] ? 'ring-red-500' : 'ring-gray-300'} focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6`}
+                  value={formValues.document_type}
+                  onChange={handleChange}
+                  className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors.document_type ? 'ring-red-500' : 'ring-gray-300'} focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6`}
                 >
                   <option value=''>Select</option>
                   <option value='PA'>Pasaporte</option>
@@ -161,22 +189,22 @@ export function ProfilePage () {
             </div>
 
             <div className='sm:col-span-3'>
-              <label htmlFor='document-number' className='block text-sm font-medium leading-6 text-gray-900'>
+              <label htmlFor='document_number' className='block text-sm font-medium leading-6 text-gray-900'>
                 Document Number
               </label>
               <div className='mt-2'>
                 <input
-                  type='number'
-                  name='document-number'
-                  id='document-number'
+                  type='text'
+                  name='document_number'
+                  id='document_number'
                   autoComplete='document-number'
-                  defaultValue={profile?.document_number || ''}
+                  value={formValues.document_number}
+                  onChange={handleChange}
                   pattern='[0-9]*'
                   inputMode='numeric'
-                  className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors['document-number'] ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
+                  className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors.document_number ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
               </div>
-
             </div>
 
             <div className='sm:col-span-3'>
@@ -188,7 +216,8 @@ export function ProfilePage () {
                   id='gender'
                   name='gender'
                   autoComplete='gender'
-                  defaultValue={profile?.gender || ''}
+                  value={formValues.gender}
+                  onChange={handleChange}
                   className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors.gender ? 'ring-red-500' : 'ring-gray-300'} focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6`}
                 >
                   <option value='M'>Male</option>
@@ -199,41 +228,46 @@ export function ProfilePage () {
             </div>
 
             <div className='sm:col-span-3'>
-              <label htmlFor='birth-date' className='block text-sm font-medium leading-6 text-gray-900'>
+              <label htmlFor='birth_date' className='block text-sm font-medium leading-6 text-gray-900'>
                 Birth Date
               </label>
               <div className='mt-2'>
                 <input
                   type='date'
-                  name='birth-date'
-                  id='birth-date'
+                  name='birth_date'
+                  id='birth_date'
                   autoComplete='bday'
-                  defaultValue={profile?.birth_date || ''}
-                  className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors['birth-date'] ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
+                  value={formValues.birth_date}
+                  onChange={handleChange}
+                  className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors.birth_date ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
               </div>
             </div>
 
             <div className='sm:col-span-3'>
-              <label htmlFor='phone-number' className='block text-sm font-medium leading-6 text-gray-900'>
+              <label htmlFor='phone_number' className='block text-sm font-medium leading-6 text-gray-900'>
                 Phone Number
               </label>
               <div className='mt-2 grid grid-cols-3 gap-2'>
                 <input
                   type='tel'
-                  name='country-code'
-                  id='country-code'
+                  name='country_code'
+                  id='country_code'
                   placeholder='+1'
-                  defaultValue={profile?.phone_number || '+51'}
-                  className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors['phone-number'] ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
+                  value={formValues.phone_country_code}
+                  onChange={handleChange}
+                  pattern='\+[0-9]*'
+                  inputMode='numeric'
+                  className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors.phone_number ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
                 <input
                   type='tel'
-                  name='phone-number'
-                  id='phone-number'
+                  name='phone_number'
+                  id='phone_number'
                   autoComplete='tel'
-                  defaultValue={profile?.phone_number || ''}
-                  className={`col-span-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors['phone-number'] ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
+                  value={formValues.phone_number}
+                  onChange={handleChange}
+                  className={`col-span-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${errors.phone_number ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
               </div>
             </div>
