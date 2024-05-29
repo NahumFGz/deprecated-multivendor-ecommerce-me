@@ -1,8 +1,37 @@
 import { UserCircleIcon } from '@heroicons/react/24/solid'
+import { useEffect, useState } from 'react'
+import { useProfileAPI } from '../hooks/useProfileAPI'
 
 export function ProfilePage () {
+  const [profile, setProfile] = useState(null)
+  const { getProfile } = useProfileAPI()
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await getProfile()
+        setProfile(response[0])
+      } catch (error) {
+        console.error('Error getting profile')
+      }
+    }
+
+    fetchProfile()
+  }, [])
+
+  useEffect(() => {
+    console.log(profile)
+  }, [profile])
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    const fields = Object.fromEntries(new FormData(event.target))
+    console.log(fields)
+    console.log('--->', fields.email)
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className='space-y-12'>
         <div className='border-b border-gray-900/10 pb-12'>
           <h2 className='text-base font-semibold leading-7 text-gray-900'>Profile</h2>
@@ -12,11 +41,7 @@ export function ProfilePage () {
 
           <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
             <div className='sm:col-span-4'>
-              <label
-                htmlFor='email'
-                className='block text-sm font-medium leading-6 text-gray-900'
-                readOnly
-              >
+              <label htmlFor='email' className='block text-sm font-medium leading-6 text-gray-900'>
                 Email address
               </label>
               <div className='mt-2'>
@@ -26,13 +51,14 @@ export function ProfilePage () {
                   type='email'
                   autoComplete='email'
                   readOnly
+                  defaultValue={profile?.email || ''}
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-gray-100'
                 />
               </div>
             </div>
 
             <div className='col-span-full'>
-              <label htmlFor='photo' className='block text-sm font-medium leading-6 text-gray-900'>
+              <label className='block text-sm font-medium leading-6 text-gray-900'>
                 Photo
               </label>
               <div className='mt-2 flex items-center gap-x-3'>
@@ -63,6 +89,7 @@ export function ProfilePage () {
                   name='first-name'
                   id='first-name'
                   autoComplete='given-name'
+                  defaultValue={profile?.first_name || ''}
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                 />
               </div>
@@ -78,6 +105,7 @@ export function ProfilePage () {
                   name='last-name'
                   id='last-name'
                   autoComplete='family-name'
+                  defaultValue={profile?.last_name || ''}
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                 />
               </div>
@@ -92,8 +120,10 @@ export function ProfilePage () {
                   id='document-type'
                   name='document-type'
                   autoComplete='document-type'
+                  defaultValue={profile?.document_type || ''}
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
                 >
+                  <option value=''>Select</option>
                   <option value='PA'>Pasaporte</option>
                   <option value='DNI'>Documento nacional de identidad</option>
                   <option value='CE'>Carnet de extranjería</option>
@@ -111,6 +141,7 @@ export function ProfilePage () {
                   name='document-number'
                   id='document-number'
                   autoComplete='document-number'
+                  defaultValue={profile?.document_number || ''}
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                 />
               </div>
@@ -125,6 +156,7 @@ export function ProfilePage () {
                   id='gender'
                   name='gender'
                   autoComplete='gender'
+                  defaultValue={profile?.gender || ''}
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
                 >
                   <option value='M'>Male</option>
@@ -144,6 +176,7 @@ export function ProfilePage () {
                   name='birth-date'
                   id='birth-date'
                   autoComplete='bday'
+                  defaultValue={profile?.birth_date || ''}
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                 />
               </div>
@@ -159,6 +192,7 @@ export function ProfilePage () {
                   name='country-code'
                   id='country-code'
                   placeholder='+1'
+                  defaultValue={profile?.phone_number ? profile.phone_number.slice(0, 3) : ''}
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                 />
                 <input
@@ -166,6 +200,7 @@ export function ProfilePage () {
                   name='phone-number'
                   id='phone-number'
                   autoComplete='tel'
+                  defaultValue={profile?.phone_number ? profile.phone_number.slice(3) : ''}
                   className='col-span-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                 />
               </div>
