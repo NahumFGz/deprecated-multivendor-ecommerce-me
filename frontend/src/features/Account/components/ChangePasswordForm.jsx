@@ -1,6 +1,34 @@
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+
 export function ChangePasswordForm () {
+  const formik = useFormik({
+    initialValues: {
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: ''
+    },
+    validationSchema: Yup.object({
+      currentPassword: Yup.string().required('Current Password is required'),
+      newPassword: Yup.string()
+        .min(8, 'Password must be at least 8 characters')
+        .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+        .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+        .matches(/[0-9]/, 'Password must contain at least one number')
+        .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character')
+        .required('New Password is required'),
+      confirmPassword: Yup.string()
+        .oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
+        .required('Confirm Password is required')
+    }),
+    onSubmit: (values, { resetForm }) => {
+      console.log(values)
+      resetForm()
+    }
+  })
+
   return (
-    <form>
+    <form className='mt-8' onSubmit={formik.handleSubmit}>
       <div className='space-y-12'>
         <div className='grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3'>
           <div>
@@ -15,11 +43,19 @@ export function ChangePasswordForm () {
               <div className='mt-2'>
                 <input
                   type='password'
-                  name='current-password'
+                  name='currentPassword'
                   id='current-password'
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                   placeholder='Current Password'
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.currentPassword}
                 />
+                {formik.touched.currentPassword && formik.errors.currentPassword
+                  ? (
+                    <div className='text-red-500 text-sm'>{formik.errors.currentPassword}</div>
+                    )
+                  : null}
               </div>
             </div>
 
@@ -30,11 +66,19 @@ export function ChangePasswordForm () {
               <div className='mt-2'>
                 <input
                   type='password'
-                  name='new-password'
+                  name='newPassword'
                   id='new-password'
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                   placeholder='New Password'
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.newPassword}
                 />
+                {formik.touched.newPassword && formik.errors.newPassword
+                  ? (
+                    <div className='text-red-500 text-sm'>{formik.errors.newPassword}</div>
+                    )
+                  : null}
               </div>
             </div>
 
@@ -45,11 +89,19 @@ export function ChangePasswordForm () {
               <div className='mt-2'>
                 <input
                   type='password'
-                  name='confirm-password'
+                  name='confirmPassword'
                   id='confirm-password'
                   className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                   placeholder='Confirm New Password'
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.confirmPassword}
                 />
+                {formik.touched.confirmPassword && formik.errors.confirmPassword
+                  ? (
+                    <div className='text-red-500 text-sm'>{formik.errors.confirmPassword}</div>
+                    )
+                  : null}
               </div>
             </div>
           </div>
