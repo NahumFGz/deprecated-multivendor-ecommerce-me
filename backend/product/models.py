@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models import signals
+from django.dispatch import receiver
 from thumbnails.fields import ImageField
 
 from core.models import TimeStampModel, TimeStampUUIDModel
@@ -8,7 +10,7 @@ from core.models import TimeStampModel, TimeStampUUIDModel
 class Category(TimeStampModel):
     name = models.CharField(max_length=200)
     image = ImageField(upload_to="category", blank=True, null=True)
-    slug = models.SlugField(max_length=200, blank=True, unique=True)
+    slug = models.SlugField(max_length=200, blank=True, null=True)
 
     class Meta:
         verbose_name = "Category"
@@ -31,3 +33,8 @@ class Category(TimeStampModel):
     def image_large_size(self):
         large_url = self.image.thumbnail.large.url
         return large_url
+
+
+@receiver(signals.pre_save, sender=Category)
+def pre_save_category(sender, instance, **kwargs):
+    instance.slug = instance.name.replace(" ", "-").lower()
