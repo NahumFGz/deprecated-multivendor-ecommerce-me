@@ -60,3 +60,23 @@ class KindProduct(TimeStampModel):
 @receiver(signals.pre_save, sender=KindProduct)
 def pre_save_kind_product(sender, instance, **kwargs):
     instance.slug = slugify(instance.name)
+
+
+class SubKindProduct(TimeStampModel):
+    kind = models.ForeignKey(
+        KindProduct, related_name="subkinds", blank=True, null=True, on_delete=models.CASCADE
+    )
+    name = models.CharField(max_length=200, unique=True)
+    slug = models.SlugField(max_length=200, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "SubKind"
+        verbose_name_plural = "SubKinds"
+
+    def __str__(self):
+        return self.name
+
+
+@receiver(signals.pre_save, sender=SubKindProduct)
+def pre_save_sub_kind_product(sender, instance, **kwargs):
+    instance.slug = slugify(instance.name)
