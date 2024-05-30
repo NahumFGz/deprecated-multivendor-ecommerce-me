@@ -45,9 +45,11 @@ INSTALLED_APPS = [
     "rest_framework",
     "drf_yasg",
     "corsheaders",
+    "thumbnails",
     # Local-apps
     "user_auth",
     "user_profile",
+    "product",
 ]
 
 MIDDLEWARE = [
@@ -182,3 +184,63 @@ EMAIL_HOST = config("EMAIL_HOST")
 EMAIL_HOST_USER = config("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = config("EMAIL_PORT")
+
+# Configuración de django-tumbnails
+# https://pypi.org/project/django-thumbnails/
+THUMBNAILS = {
+    # "METADATA": {
+    #     "PREFIX": "thumbs",
+    #     "BACKEND": "thumbnails.backends.metadata.RedisBackend",
+    #     "db": 2,
+    #     "port": 6379,
+    #     "host": "localhost",
+    # },
+    "STORAGE": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        # You can also use Amazon S3 or any other Django storage backends
+    },
+    "SIZES": {
+        "small": {
+            "PROCESSORS": [{"PATH": "thumbnails.processors.resize", "width": 500}],
+            "POST_PROCESSORS": [
+                {
+                    "PATH": "thumbnails.post_processors.optimize",
+                    "png_command": 'optipng -force -o7 "%(filename)s"',
+                    "jpg_command": 'jpegoptim -f --strip-all "%(filename)s"',
+                },
+            ],
+        },
+        "medium": {
+            "PROCESSORS": [
+                {"PATH": "thumbnails.processors.resize", "width": 750},
+            ],
+            "POST_PROCESSORS": [
+                {
+                    "PATH": "thumbnails.post_processors.optimize",
+                    "png_command": 'optipng -force -o7 "%(filename)s"',
+                    "jpg_command": 'jpegoptim -f --strip-all "%(filename)s"',
+                },
+            ],
+        },
+        "large": {
+            "PROCESSORS": [
+                {"PATH": "thumbnails.processors.resize", "width": 1000},
+            ],
+            "POST_PROCESSORS": [
+                {
+                    "PATH": "thumbnails.post_processors.optimize",
+                    "png_command": 'optipng -force -o7 "%(filename)s"',
+                    "jpg_command": 'jpegoptim -f --strip-all "%(filename)s"',
+                },
+            ],
+        },
+        "watermarked": {
+            "PROCESSORS": [
+                {"PATH": "thumbnails.processors.resize", "width": 20, "height": 20},
+                # Only supports PNG. File must be of the same size with
+                # thumbnail (20 x 20 in this case)
+                {"PATH": "thumbnails.processors.add_watermark", "watermark_path": "watermark.png"},
+            ],
+        },
+    },
+}
