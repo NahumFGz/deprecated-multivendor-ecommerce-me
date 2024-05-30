@@ -2,8 +2,8 @@ export const homeBasePath = '/home'
 
 export const homeUrls = {
   home: `${homeBasePath}`,
-  yugioh: `${homeBasePath}/marketplace/?category=yugioh`,
-  pokemon: `${homeBasePath}/marketplace/?category=pokemon`,
-  boardGames: `${homeBasePath}/marketplace/?category=board-games`,
+  yugioh: `${homeBasePath}/marketplace/yugioh`,
+  pokemon: `${homeBasePath}/marketplace/pokemon`,
+  boardGames: `${homeBasePath}/marketplace/board-games`,
   marketplace: `${homeBasePath}/marketplace`
 }
