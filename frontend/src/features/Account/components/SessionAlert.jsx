@@ -1,8 +1,13 @@
-import { Fragment } from 'react'
+import React, { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 export function SessionAlert ({ open, setOpen }) {
+  const handleCloseAllSessions = () => {
+    console.log('Cerrar todas las sesiones')
+    setOpen(false)
+  }
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as='div' className='relative z-10' onClose={setOpen}>
@@ -59,7 +64,7 @@ export function SessionAlert ({ open, setOpen }) {
                   <button
                     type='button'
                     className='inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto'
-                    onClick={() => setOpen(false)}
+                    onClick={handleCloseAllSessions}
                   >
                     Cerrar todas las sesiones
                   </button>
