@@ -21,7 +21,7 @@ import {
   MagnifyingGlassIcon
 } from '@heroicons/react/24/outline'
 import { useAuthStore } from '../../../store/useAuthStore'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { authUrls } from '../../../routes/urls/authUrls'
 import { homeUrls } from '../../../routes/urls/homeUrls'
 import { accountUrls } from '../../../routes/urls/accountUrls'
@@ -30,6 +30,7 @@ const navigation = {
   categories: [
     {
       name: 'Yu-Gi-Oh!',
+      to: homeUrls.yugioh,
       featured: [
         {
           name: 'New Arrivals',
@@ -59,6 +60,7 @@ const navigation = {
     },
     {
       name: 'Pokemon',
+      to: homeUrls.pokemon,
       featured: [
         {
           name: 'New Arrivals',
@@ -89,6 +91,7 @@ const navigation = {
     },
     {
       name: 'Juegos de mesa',
+      to: homeUrls.boardGames,
       featured: [
         {
           name: 'Basic Tees',
@@ -132,9 +135,11 @@ export function HeaderSecondadry () {
   const profile = useAuthStore((store) => store.profile)
   const isAuth = useAuthStore((store) => store.isAuth)
   const cleanStore = useAuthStore((store) => store.cleanStore)
+  const location = useLocation()
 
   console.log('profile', profile)
   console.log('isAuth', isAuth)
+  console.log('location xxx', location)
 
   const handleLogout = () => {
     console.log('Logging out...')
@@ -274,7 +279,7 @@ export function HeaderSecondadry () {
           {/* Secondary navigation */}
           <div className='bg-white'>
             <div className='mx-auto max-w-7xl px-2 sm:px-4 lg:px-6'>
-              <div className='border-b border-gray-200'>dasdsadsaz
+              <div className='border-b border-gray-200'>
                 <div className='flex h-16 items-center justify-center'>
                   <div className='hidden h-full lg:flex'>
                     {/* Flyout menus */}
@@ -285,15 +290,31 @@ export function HeaderSecondadry () {
                             {({ open, close }) => (
                               <>
                                 <div className='relative flex'>
-                                  <PopoverButton
-                                    className={classNames(
-                                      open ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-700 hover:text-gray-800',
-                                      'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out focus:outline-none'
-                                    )}
-                                  >
-                                    {category.name}
-                                    <ChevronDownIcon className='m-2 h-4' aria-hidden='true' />
-                                  </PopoverButton>
+                                  {
+                                    !location.pathname.includes('marketplace')
+                                      ? (
+                                        <PopoverButton
+                                          className={classNames(
+                                            open ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-700 hover:text-gray-800',
+                                            'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out focus:outline-none'
+                                          )}
+                                        >
+                                          {category.name}
+                                          <ChevronDownIcon className='m-2 h-4' aria-hidden='true' />
+                                        </PopoverButton>
+                                        )
+                                      : (
+                                        <Link
+                                          to={category.to}
+                                          className={classNames(
+                                            open ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-700 hover:text-gray-800',
+                                            'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out focus:outline-none'
+                                          )}
+                                        >
+                                          {category.name}
+                                        </Link>
+                                        )
+                                  }
                                 </div>
 
                                 <Transition
