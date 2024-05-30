@@ -9,7 +9,7 @@ from core.models import TimeStampModel, TimeStampUUIDModel
 
 # Create your models here.
 class Category(TimeStampModel):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
     image = ImageField(upload_to="category", blank=True, null=True)
     slug = models.SlugField(max_length=200, blank=True, null=True)
 
