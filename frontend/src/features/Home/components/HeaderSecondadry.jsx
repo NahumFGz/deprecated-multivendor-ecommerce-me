@@ -132,14 +132,14 @@ function classNames (...classes) {
 
 export function HeaderSecondadry () {
   const [open, setOpen] = useState(false)
-  const profile = useAuthStore((store) => store.profile)
+  // const profile = useAuthStore((store) => store.profile)
   const isAuth = useAuthStore((store) => store.isAuth)
   const cleanStore = useAuthStore((store) => store.cleanStore)
   const location = useLocation()
 
-  console.log('profile', profile)
-  console.log('isAuth', isAuth)
-  console.log('location xxx', location)
+  // console.log('profile', profile)
+  // console.log('isAuth', isAuth)
+  // console.log('location xxx', location)
 
   const handleLogout = () => {
     console.log('Logging out...')

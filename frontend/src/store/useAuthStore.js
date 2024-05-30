@@ -9,8 +9,8 @@ export const useAuthStore = create(
       profile: null,
       setToken: (token) => {
         set({ token, isAuth: true })
-        console.log('token', token)
-        console.log('isAuth', true)
+        // console.log('token', token)
+        // console.log('isAuth', true)
       },
       setProfile: (profile) => set({ profile }),
       cleanStore: () => {
