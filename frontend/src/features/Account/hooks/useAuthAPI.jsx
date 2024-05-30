@@ -1,5 +1,5 @@
 import { useAuthStore } from '../../../store/useAuthStore'
-import { logoutAllApi } from '../../../services/api/authAPI'
+import { changePasswordApi, logoutAllApi } from '../../../services/api/authAPI'
 
 export function useAuthAPI () {
   const token = useAuthStore((state) => state.token)
@@ -12,5 +12,15 @@ export function useAuthAPI () {
       throw new Error('Error logging out')
     }
   }
-  return { logoutAll }
+
+  const changePassword = async (changePasswordData) => {
+    try {
+      const response = await changePasswordApi(token?.access, changePasswordData)
+      return response
+    } catch (error) {
+      throw new Error('Error changing password')
+    }
+  }
+
+  return { logoutAll, changePassword }
 }

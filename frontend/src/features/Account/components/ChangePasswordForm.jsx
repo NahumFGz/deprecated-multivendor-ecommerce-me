@@ -1,7 +1,11 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useAuthAPI } from '../hooks/useAuthAPI'
+import { toast } from 'react-toastify'
 
 export function ChangePasswordForm () {
+  const { changePassword } = useAuthAPI()
+
   const formik = useFormik({
     initialValues: {
       currentPassword: '',
@@ -21,9 +25,21 @@ export function ChangePasswordForm () {
         .oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
         .required('Confirm Password is required')
     }),
-    onSubmit: (values, { resetForm }) => {
-      console.log(values)
-      resetForm()
+    onSubmit: async (values, { resetForm }) => {
+      const changePasswordData = {
+        old_password: values.currentPassword,
+        new_password: values.newPassword,
+        new_password2: values.confirmPassword
+      }
+      try {
+        console.log(changePasswordData)
+        await changePassword(changePasswordData)
+        resetForm()
+        toast.success('Password changed successfully')
+      } catch (error) {
+        console.log('Error changing')
+        toast.error('Error changing password')
+      }
     }
   })
 

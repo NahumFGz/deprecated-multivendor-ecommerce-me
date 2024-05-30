@@ -109,3 +109,19 @@ export async function resetPasswordConfirmApi (resetPasswordConfirmData) {
     throw new Error('Reset password confirm failed')
   }
 }
+
+export async function changePasswordApi (accessToken, changePasswordData) {
+  try {
+    const axiosInstance = createAxiosAuthInstance(accessToken)
+    const response = await axiosInstance.post('/api/auth/password-change/', changePasswordData)
+    const { data, status } = response
+
+    if (status === 200) {
+      return data
+    } else {
+      throw new Error('Change password failed')
+    }
+  } catch (error) {
+    throw new Error('Change password failed')
+  }
+}
