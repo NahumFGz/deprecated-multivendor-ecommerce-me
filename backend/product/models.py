@@ -39,3 +39,24 @@ class Category(TimeStampModel):
 @receiver(signals.pre_save, sender=Category)
 def pre_save_category(sender, instance, **kwargs):
     instance.slug = slugify(instance.name)
+
+
+class KindProduct(TimeStampModel):
+    category = models.ForeignKey(
+        Category, related_name="kinds", blank=True, null=True, on_delete=models.CASCADE
+    )
+    name = models.CharField(max_length=200, unique=True)
+    slug = models.SlugField(max_length=200, blank=True, null=True)
+    principal_image = ImageField(upload_to="kind", blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Kind"
+        verbose_name_plural = "Kinds"
+
+    def __str__(self):
+        return self.name
+
+
+@receiver(signals.pre_save, sender=KindProduct)
+def pre_save_kind_product(sender, instance, **kwargs):
+    instance.slug = slugify(instance.name)
