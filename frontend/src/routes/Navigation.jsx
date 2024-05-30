@@ -15,7 +15,7 @@ import { ProfilePage } from '../features/Account/pages/ProfilePage'
 import { SellingHistoryPage } from '../features/Account/pages/SellingHistoryPage'
 import { ShoppingHistoryPage } from '../features/Account/pages/ShoppingHistoryPage'
 
-import { homeBasePath, homeUrls } from './urls/homeUrls'
+import { homeUrls } from './urls/homeUrls'
 import { HomeLayout } from '../features/Home/layouts/HomeLayout'
 import { HomePage } from '../features/Home/pages/HomePage'
 import { YugiohPage } from '../features/Home/pages/YugiohPage'
@@ -29,7 +29,7 @@ export function Navigation () {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Navigate to={homeBasePath} />} />
+        <Route path='/' element={<Navigate to={homeUrls.home} />} />
         <Route path={homeUrls.home} element={<HomeLayout><HomePage /></HomeLayout>} />
         <Route path={homeUrls.yugioh} element={<HomeLayout><FiltersLayout><YugiohPage /></FiltersLayout></HomeLayout>} />
         <Route path={homeUrls.pokemon} element={<HomeLayout><FiltersLayout><PokemonPage /></FiltersLayout></HomeLayout>} />

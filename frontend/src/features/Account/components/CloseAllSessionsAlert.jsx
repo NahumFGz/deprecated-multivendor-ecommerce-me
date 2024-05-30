@@ -1,10 +1,25 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useAuthStore } from '../../../store/useAuthStore'
+import { useAuthAPI } from '../hooks/useAuthAPI'
+import { useNavigate } from 'react-router-dom'
+import { homeUrls } from '../../../routes/urls/homeUrls'
 
-export function SessionAlert ({ open, setOpen }) {
-  const handleCloseAllSessions = () => {
-    console.log('Cerrar todas las sesiones')
+export function CloseAllSessionsAlert ({ open, setOpen }) {
+  const cleanStore = useAuthStore((store) => store.cleanStore)
+  const { logoutAll } = useAuthAPI()
+  const navigation = useNavigate()
+
+  const handleCloseAllSessions = async () => {
+    try {
+      console.log('Cerrar todas las sesiones')
+      navigation(homeUrls.home)
+      await logoutAll()
+      cleanStore()
+    } catch (error) {
+      console.log('Error cerrando todas las sesiones')
+    }
     setOpen(false)
   }
 
