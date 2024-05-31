@@ -39,17 +39,17 @@ class Product(TimeStampUUIDModel):
 
     @property
     def image_small_size(self):
-        small_url = self.image_principal.thumbnail.small.url
+        small_url = self.image_principal.thumbnails.small.url
         return small_url
 
     @property
     def image_medium_size(self):
-        medium_url = self.image_principal.thumbnail.medium.url
+        medium_url = self.image_principal.thumbnails.medium.url
         return medium_url
 
     @property
     def image_large_size(self):
-        large_url = self.image_principal.thumbnail.large.url
+        large_url = self.image_principal.thumbnails.large.url
         return large_url
 
 
