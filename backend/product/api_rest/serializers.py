@@ -3,9 +3,9 @@ from rest_framework import serializers
 from product.models import Category, KindProduct, Product, SubKindProduct
 
 
-class CategorySerializer(serializers.ModelSerializer):
+class SubKindProductSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Category
+        model = SubKindProduct
         fields = "__all__"
 
 
@@ -15,9 +15,9 @@ class KindProductSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class SubKindProductSerializer(serializers.ModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = SubKindProduct
+        model = Category
         fields = "__all__"
 
 
