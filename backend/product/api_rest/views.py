@@ -1,4 +1,6 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
+from rest_framework.filters import OrderingFilter, SearchFilter
 
 from product.models import Category, KindProduct, Product, SubKindProduct
 
@@ -29,3 +31,9 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     http_method_names = ["get", "post", "patch"]
+    filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
+    search_fields = ["title", "description"]
+    filterset_fields = ["title"]
+
+    # Optional: Defeult ordering
+    ordering_fields = ["price", "created_at"]
