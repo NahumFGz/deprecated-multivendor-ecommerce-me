@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 
 
@@ -26,7 +28,7 @@ class TimeStampUUIDModel(models.Model):
     Best practice for lookup field url instead pk or slug for security
     """
 
-    uuid = models.UUIDField(db_index=True, unique=True, editable=False)
+    uuid = models.UUIDField(db_index=True, unique=True, editable=False, default=uuid.uuid4)
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
