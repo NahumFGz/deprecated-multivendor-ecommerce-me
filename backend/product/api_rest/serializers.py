@@ -17,6 +17,12 @@ class KindProductSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class SimpleKindProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = KindProduct
+        fields = ["id", "slug"]
+
+
 class CategorySerializer(serializers.ModelSerializer):
     kinds = serializers.SerializerMethodField()
 
@@ -31,6 +37,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     images = serializers.SerializerMethodField()
+    kind_of_product = SimpleKindProductSerializer()
 
     class Meta:
         model = Product
