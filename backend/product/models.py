@@ -128,3 +128,8 @@ class Product(TimeStampUUIDModel):
     def image_large_size(self):
         large_url = self.image_principal.thumbnail.large.url
         return large_url
+
+
+@receiver(signals.pre_save, sender=Product)
+def pre_save_product(sender, instance, **kwargs):
+    instance.slug = slugify(instance.title)
